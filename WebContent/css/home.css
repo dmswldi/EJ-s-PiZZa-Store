@@ -1,0 +1,10 @@
+@charset "UTF-8";
+
+.carousel-wrapper {
+	max-height:500px;
+	overflow:hidden;
+}
+
+span {
+	color: red;
+}

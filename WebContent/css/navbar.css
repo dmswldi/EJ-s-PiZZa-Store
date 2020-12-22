@@ -1,0 +1,22 @@
+@charset "UTF-8";
+
+div {
+	font-family: 'Noto Sans KR';	
+}
+.container {
+	font-family: 'Langar';
+}
+
+
+#logo {
+	width: 55px;
+	height: 55px;
+}
+
+.navbar-brand {
+	font-size: 40px;
+}
+
+a {
+	font-size: 20px;
+}
