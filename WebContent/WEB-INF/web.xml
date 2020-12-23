@@ -24,4 +24,41 @@
   	<param-name>jdbcPw</param-name>
   	<param-value>7542</param-value>
   </context-param>
+  
+  <servlet>
+  	<servlet-name>Controller</servlet-name>
+  	<servlet-class>controller.CentralController</servlet-class>
+  	<init-param>
+  		<param-name>configFile</param-name>
+  		<param-value>/WEB-INF/handlerPropertyFile.properties</param-value>
+  	</init-param>
+  	<load-on-startup>1</load-on-startup> <!-- 서블릿 객체 생성, init() 실행 -->
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>Controller</servlet-name>
+  	<url-pattern>*.do</url-pattern>
+  </servlet-mapping>
+  
+  <filter>
+  	<filter-name>CharacterEncodingFilter</filter-name>
+  	<filter-class>filter.CharacterEncodingFilter</filter-class>
+  </filter>
+  
+  <filter-mapping>
+  	<filter-name>CharacterEncodingFilter</filter-name>
+  	<url-pattern>/*</url-pattern> <!-- 모든 경로에 대해 -->
+  </filter-mapping>
+  
+  <filter>
+  	<filter-name>LoginCheckFilter</filter-name>
+  	<filter-class>filter.LoginCheckFilter</filter-class>
+  </filter>
+  
+  <filter-mapping>
+  	<filter-name>LoginCheckFilter</filter-name>
+  	<url-pattern>/logout.do</url-pattern>
+  	<url-pattern>/myPage.do</url-pattern>
+  </filter-mapping>
+  
 </web-app>
