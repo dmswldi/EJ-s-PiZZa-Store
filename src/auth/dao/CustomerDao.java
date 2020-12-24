@@ -5,28 +5,37 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import auth.model.Customer;
 import auth.model.JoinRequest;
+import auth.model.ModifyRequest;
 import init.JDBCUtil;
 
 public class CustomerDao {
 	
-	public Boolean selecteById(Connection conn, String id) throws SQLException {
+	public Customer selecteById(Connection conn, String userId) throws SQLException {
 		String sql = "SELECT * FROM customer "
 				+ "WHERE userId = ?";
 		ResultSet rs = null;
 		
 		try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-			pstmt.setString(1, id);
+			pstmt.setString(1, userId);
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
-				return true;
+				Customer customer = new Customer();
+				customer.setId(rs.getString("userId"));
+				customer.setName(rs.getString("name"));
+				customer.setPassword(rs.getString("password"));
+				customer.setPhone(rs.getString("phone"));
+				customer.setAddress(rs.getString("address"));
+				
+				return customer;
 			}
 		} finally {
 			JDBCUtil.close(rs);
 		}
 		
-		return false;
+		return null;
 	}
 
 	public void insert(Connection conn, JoinRequest joinReq) throws SQLException {
@@ -45,5 +54,29 @@ public class CustomerDao {
 		} 
 	}
 	
+	public void update(Connection conn, ModifyRequest modifyReq) throws SQLException {
+		String sql = "UPDATE customer "
+				+ "SET password = ?, phone = ?, address = ? "
+				+ "WHERE userId = ?";
+		
+		try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setString(1, modifyReq.getNewPassword());
+			pstmt.setString(2, modifyReq.getPhone());
+			pstmt.setString(3, modifyReq.getAddress());
+			pstmt.setString(4, modifyReq.getId());
+			
+			pstmt.executeUpdate();
+		} 
+	}
 	
+	public void remove(Connection conn, String userId) throws SQLException {
+		String sql = "DELETE FROM customer "
+				+ "WHERE userId = ?";
+		
+		try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setString(1, userId);
+			
+			pstmt.executeUpdate();
+		} 
+	}
 }

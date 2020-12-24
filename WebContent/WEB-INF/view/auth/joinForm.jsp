@@ -73,7 +73,7 @@
 			    <label for="address">Address</label> <%-- 주소 검색...ㅎㅎ --%>
 			    <input type="text" class="form-control" id="address" name="address" value="${param.address }">
 			  </div>
-			  <button type="submit" class="btn btn-primary float-right">Join</button>
+			  <button type="submit" class="btn btn-primary float-right">Sign Up</button>
 			</form>
 		</div>
 	</div>

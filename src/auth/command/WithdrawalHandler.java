@@ -7,13 +7,14 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import auth.model.JoinRequest;
-import auth.service.JoinService;
+import auth.model.Customer;
+import auth.model.User;
+import auth.service.WithdrawalService;
 import controller.Handler;
 
-public class JoinHandler implements Handler {
-	private static final String FORM_VIEW = "auth/joinForm";
-	private JoinService joinSvc = new JoinService();
+public class WithdrawalHandler implements Handler {
+	private static final String FORM_VIEW = "auth/withdrawalForm";
+	private WithdrawalService withdrawalSvc = new WithdrawalService();
 	
 	@Override
 	public String process(HttpServletRequest req, HttpServletResponse res) throws IOException {
@@ -32,33 +33,20 @@ public class JoinHandler implements Handler {
 	}
 
 	private String processSubmit(HttpServletRequest req, HttpServletResponse res) throws IOException {
-		JoinRequest joinReq = new JoinRequest();
-		joinReq.setId(req.getParameter("id"));
-		joinReq.setName(req.getParameter("name"));
-		joinReq.setPassword(req.getParameter("password"));
-		joinReq.setPasswordCheck(req.getParameter("passwordCheck"));
-		String[] phone = req.getParameterValues("phone");
-		joinReq.setPhone(phone[0] + phone[1] + phone[2]);// string으로 저장
-		joinReq.setAddress(req.getParameter("address"));
+		User user = new User();
+		Customer customer = (Customer) req.getSession().getAttribute("user");
+		user.setId(customer.getId());
+		user.setPassword(req.getParameter("password"));
 		
 		Map<String, Boolean> errors = new HashMap<>();
 		req.setAttribute("errors", errors);
 		
-		joinReq.validate(errors);
-		
-		if(!errors.isEmpty()) {
+		if(withdrawalSvc.withdrawal(user, errors)) {
+			req.getSession().invalidate();
+			return "auth/withdrawalSuccess";			
+		} else {
 			return FORM_VIEW;
 		}
 		
-		// id 중복 시
-		joinSvc.join(joinReq, errors);
-		
-		if(!errors.isEmpty()) {
-			return FORM_VIEW;
-		}
-		
-		res.sendRedirect(req.getContextPath() + "/home.jsp");
-		return null;
 	}
-
 }

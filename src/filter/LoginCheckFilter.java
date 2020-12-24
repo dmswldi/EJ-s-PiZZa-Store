@@ -44,7 +44,7 @@ public class LoginCheckFilter implements Filter {
 		
 		if(session == null || session.getAttribute("user") == null ) {
 			// 요청 저장, 로그인 하게 하고, 원래 요청으로 go
-			req.setAttribute("link", req.getRequestURI());
+			session.setAttribute("link", req.getRequestURI());
 			res.sendRedirect(req.getContextPath() + "/login.do");
 		} else {
 			chain.doFilter(request, response);			

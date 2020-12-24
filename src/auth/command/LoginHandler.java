@@ -6,14 +6,16 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import auth.model.LoginRequest;
+import auth.model.Customer;
+import auth.model.User;
 import auth.service.LoginService;
 import controller.Handler;
 
 public class LoginHandler implements Handler {
-	private static final String FORM_VIEW = "auth/login";
-	LoginService loginSvc = new LoginService();
+	private static final String FORM_VIEW = "auth/loginForm";
+	private LoginService loginSvc = new LoginService();
 	
 	@Override
 	public String process(HttpServletRequest req, HttpServletResponse res) throws IOException {
@@ -31,21 +33,30 @@ public class LoginHandler implements Handler {
 		return FORM_VIEW;
 	}
 
-	private String processSubmit(HttpServletRequest req, HttpServletResponse res) {
-		LoginRequest loginReq = new LoginRequest();
-		loginReq.setId(req.getParameter("id"));
-		loginReq.setPassword(req.getParameter("password"));
+	private String processSubmit(HttpServletRequest req, HttpServletResponse res) throws IOException {
+		User user = new User();
+		user.setId(req.getParameter("id"));
+		user.setPassword(req.getParameter("password"));
 		
 		Map<String, Boolean> errors = new HashMap<>();
 		req.setAttribute("errors", errors);
 		
-		loginSvc.validate(errors);
+		Customer customer = loginSvc.login(user, errors);
 		
 		if(!errors.isEmpty()) {
 			return FORM_VIEW;
 		}
 		
-		return "home";
+		HttpSession session = req.getSession();
+		session.setAttribute("user", customer);
+		
+		String requestedURI = (String) session.getAttribute("link");
+		if(requestedURI != null) {
+			res.sendRedirect(requestedURI);
+		} else {
+			res.sendRedirect(req.getContextPath() + "/home.jsp");			
+		}
+		return null;
 	}
 
 	

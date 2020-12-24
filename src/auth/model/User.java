@@ -1,8 +1,6 @@
 package auth.model;
 
-import java.util.Map;
-
-public class LoginRequest {
+public class User {
 	private String id;
 	private String password;
 	

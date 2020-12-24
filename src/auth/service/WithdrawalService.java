@@ -10,38 +10,39 @@ import auth.model.User;
 import init.ConnectionProvider;
 import init.JDBCUtil;
 
-public class LoginService {
+public class WithdrawalService {
 	private CustomerDao customerDao = new CustomerDao();
 
-	public Customer login(User user, Map<String, Boolean> errors) {
+	public Boolean withdrawal(User user, Map<String, Boolean> errors) {
 		Connection conn = null;
 		
 		try {
 			conn = ConnectionProvider.getConnection();
+			conn.setAutoCommit(false);
 			
 			Customer customer = customerDao.selecteById(conn, user.getId());
 			
-			// 해당 id 없음 에러
 			if(customer == null) {
-				errors.put("idNotExist", true);
-				return null;
+				throw new RuntimeException("fail to withdrawal");
 			}
 			
-			// pw 틀림 에러
 			if(!customer.matchPassword(user.getPassword())) {
 				errors.put("pwNotMatch", true);
-				return null;
+				return false;
 			}
 			
-			return customer;
-			
+			customerDao.remove(conn, user.getId());
+			conn.commit();
+			System.out.println("됐냐고!!");
+			return true;
 		} catch(SQLException e) {
 			JDBCUtil.rollback(conn);
 			e.printStackTrace();
 		} finally {
 			JDBCUtil.close(conn);
 		}
-		return null;
+		
+		return false;
 	}
-
+	
 }

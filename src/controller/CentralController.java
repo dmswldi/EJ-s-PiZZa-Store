@@ -54,22 +54,6 @@ public class CentralController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		/*
-		String sql = "INSERT INTO customer(userId, name, password, phone, address) "
-				+ "VALUES ('ee2', 'eunji', '123', '010-123-4567', 'doyojiro')";
-		Connection conn = ConnectionProvider.getConnection();
-		try {
-			Statement stmt = conn.createStatement();
-			stmt.executeUpdate(sql);
-			System.out.println("done!!!!!");
-		} catch(SQLException e) {
-			e.printStackTrace();
-			System.out.println("SQLException !!!!");
-		}
-		*/
-			
-			
-		//response.sendRedirect(request.getContextPath() + "/home.jsp");
 		process(request, response);
 	}
 
