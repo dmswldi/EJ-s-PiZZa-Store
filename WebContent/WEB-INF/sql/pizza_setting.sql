@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS `pizza`.`CUSTOMER` (
   `password` VARCHAR(45) NOT NULL,
   `phone` VARCHAR(14) NOT NULL,
   `address` VARCHAR(100) NULL,
+  `point` INT NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `userId_UNIQUE` (`userId` ASC) VISIBLE)
   ENGINE = InnoDB;
@@ -46,7 +47,6 @@ CREATE TABLE IF NOT EXISTS `pizza`.`MENU` (
   `price` INT NOT NULL,
   `discountRate` INT NOT NULL DEFAULT 0,
   `orderCount` INT NOT NULL DEFAULT 0,
-  `point` INT NOT NULL DEFAULT 0,
   `description` VARCHAR(20000) NULL,
   `rating` INT NOT NULL DEFAULT 0,
   `category` VARCHAR(45) NOT NULL CHECK (`category` IN ('standard', 'premium')),
