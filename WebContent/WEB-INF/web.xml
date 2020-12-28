@@ -60,8 +60,8 @@
   	<url-pattern>/logout.do</url-pattern>
   	<url-pattern>/myPage.do</url-pattern>
   	<url-pattern>/modify.do</url-pattern>
-  	<url-pattern>/withdrawal.do</url-pattern>  	
-  	<url-pattern>/cs/write.do</url-pattern>  	
+  	<url-pattern>/withdrawal.do</url-pattern>
+  	<url-pattern>/cs/write.do</url-pattern>
   </filter-mapping>
   
 </web-app>

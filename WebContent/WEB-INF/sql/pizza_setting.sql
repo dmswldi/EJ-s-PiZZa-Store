@@ -96,13 +96,13 @@ DROP TABLE IF EXISTS `pizza`.`CUSTOMERCENTER` ;
 
 CREATE TABLE IF NOT EXISTS `pizza`.`CUSTOMERCENTER` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `customerId` INT NOT NULL,
+  `category` VARCHAR(45) CHECK (`category` IN ('customer', 'order', 'etc')),
+  `customerId` VARCHAR(45) NOT NULL,
   `title` VARCHAR(200) NOT NULL,
-  `body` VARCHAR(1000) NOT NULL,
+  `content` VARCHAR(1000) NOT NULL,
   `date` DATETIME NOT NULL DEFAULT now(),
-  `status` VARCHAR(45) NOT NULL, CHECK ( `status` IN ('답변대기', '답변완료')),
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `customerId_UNIQUE` (`customerId` ASC) VISIBLE)
+  `status` TINYINT DEFAULT 0 NOT NULL, CHECK ( `status` IN (0, 1)),
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 
