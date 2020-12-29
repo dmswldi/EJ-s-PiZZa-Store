@@ -4,21 +4,22 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import cscenter.dao.PostDao;
-import cscenter.model.Post;
+import cscenter.model.ModifyReq;
 import init.ConnectionProvider;
 import init.JDBCUtil;
 
-public class ReadService {
+public class ModifyService {
 	private PostDao postDao = new PostDao();
 
-	public Post readPost(int id) {
+	public void modifyPost(ModifyReq modifyReq) {
 		Connection conn = null;
 		
 		try {
 			conn = ConnectionProvider.getConnection();
-			Post post = postDao.selectById(conn, id);
+			conn.setAutoCommit(false);
 			
-			return post;
+			postDao.update(conn, modifyReq);
+			conn.commit();
 		} catch(SQLException e) {
 			JDBCUtil.rollback(conn);
 			e.printStackTrace();
@@ -26,7 +27,6 @@ public class ReadService {
 			JDBCUtil.close(conn);
 		}
 		
-		return null;
 	}
 
 }

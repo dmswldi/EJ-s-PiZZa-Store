@@ -4,14 +4,14 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import cscenter.dao.PostDao;
-import cscenter.model.Post;
+import cscenter.model.Postf;
 import init.ConnectionProvider;
 import init.JDBCUtil;
 
 public class WriteService {
 	private PostDao postDao = new PostDao();
 
-	public void write(Post post) {
+	public void write(Postf post) {
 		Connection conn = null;
 		
 		try {

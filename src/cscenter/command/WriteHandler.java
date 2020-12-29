@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import auth.model.Customer;
 import controller.Handler;
-import cscenter.model.Post;
+import cscenter.model.Postf;
 import cscenter.service.WriteService;
 
 public class WriteHandler implements Handler {
@@ -30,9 +30,9 @@ public class WriteHandler implements Handler {
 		return FORM_VIEW;
 	}
 
-	private String processSubmit(HttpServletRequest req, HttpServletResponse res) {
+	private String processSubmit(HttpServletRequest req, HttpServletResponse res) throws IOException {
 		Customer customer = (Customer) req.getSession().getAttribute("user");
-		Post post = new Post();
+		Postf post = new Postf();
 		post.setCategory(req.getParameter("category"));
 		post.setCustomerId(customer.getId());
 		post.setTitle(req.getParameter("title"));
@@ -40,6 +40,7 @@ public class WriteHandler implements Handler {
 		
 		writeSvc.write(post);
 		
-		return null;// readPost list로 갈 거야!
+		res.sendRedirect(req.getContextPath() + "/cs/list.do");
+		return null;
 	}
 }

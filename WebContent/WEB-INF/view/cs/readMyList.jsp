@@ -20,7 +20,7 @@
 
 <div class="container mt-5">
 	<h2 class="text-center">Customer Center</h2>
-	<small class="form-text text-muted text-center">We are always open to you.</small>
+	<small class="form-text text-muted text-center">Hello, ${post.customerId }</small>
 	<br />
 	<table class="table table-hover">
 	  <thead>
@@ -55,19 +55,19 @@
 	<nav>
 	  <ul class="pagination d-flex justify-content-center">
 	  	<c:if test="${page.startPage > page.size}">
-	      <li class="page-item"><a class="page-link" href="${root }/cs/list.do?pageNo=${page.startPage - page.size }">Previous</a></li>
+	      <li class="page-item"><a class="page-link" href="${root }/cs/mylist.do?pageNo=${page.startPage - page.size }">Previous</a></li>
 	    </c:if>
 	    <c:forEach begin="${page.startPage }" end="${page.endPage }" varStatus="status">
 		  <c:if test="${page.pageNum eq status.index }">
 			<c:set var="active" value="active" />
 		  </c:if>
 	      <c:if test="${status.index <= page.totalPages }">
-	    	<li class="page-item ${active }"><a class="page-link" href="${root }/cs/list.do?pageNo=${status.index }">${status.index }</a></li>
+	    	<li class="page-item ${active }"><a class="page-link" href="${root }/cs/mylist.do?pageNo=${status.index }">${status.index }</a></li>
 	      </c:if>
 	      <c:remove var="active" />
 	    </c:forEach>
 	    <c:if test="${page.endPage < page.totalPages}">
-  	      <li class="page-item"><a class="page-link" href="${root }/cs/list.do?pageNo=${page.endPage + 1 }">Next</a></li>
+  	      <li class="page-item"><a class="page-link" href="${root }/cs/mylist.do?pageNo=${page.endPage + 1 }">Next</a></li>
 	    </c:if>
 	  </ul>
 	</nav>

@@ -28,7 +28,7 @@
 			  	<label for="category">종류</label>
 			  	<select class="form-control" name="category" id="category" required>
 			  		<option value="customer">회원 관련</option>
-			  		<option value="order" selected>주문 관련</option>
+			  		<option value="order">주문 관련</option>
 			  		<option value="etc">기타</option>
 			  	</select>
 			  </div>
@@ -38,7 +38,7 @@
 			  </div>
 			  <div class="form-group">
 			    <label for="content">content</label>
-			    <textarea class="form-control" id="content" name="content" rows="18" required>${param.title }</textarea>
+			    <textarea class="form-control" id="content" name="content" rows="15" required>${param.title }</textarea>
 			  </div>
 			  <button type="submit" class="btn btn-primary float-right">Save</button>
 			</form>

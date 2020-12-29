@@ -8,14 +8,14 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import cscenter.model.APost;
+import cscenter.model.ModifyReq;
 import cscenter.model.Post;
-import cscenter.model.UpdateReq;
+import cscenter.model.Postf;
 import init.JDBCUtil;
 
 public class PostDao {
 	
-	public void insert(Connection conn, Post post) throws SQLException {
+	public void insert(Connection conn, Postf post) throws SQLException {
 		String sql = "INSERT INTO customercenter "
 				+ "(category, customerId, title, content) "
 				+ "VALUES (?, ?, ?, ?)";
@@ -47,22 +47,43 @@ public class PostDao {
 		}
 		return 0;
 	}
+	
+	public int selectMyCount(Connection conn, String id) throws SQLException {
+		String sql = "SELECT COUNT(*) "
+				+ "FROM customercenter "
+				+ "WHERE customerId = ?";
+		
+		ResultSet rs = null;
+		
+		try (PreparedStatement pstmt = conn.prepareStatement(sql)){
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				System.out.println(rs.getInt(1));
+				return rs.getInt(1);
+			}
+		} finally {
+			JDBCUtil.close(rs);
+		}
+		return 0;
+	}
 
-	public List<APost> select(Connection conn, int pageNum, int size) throws SQLException {
+	public List<Post> select(Connection conn, int pageNum, int size) throws SQLException {
 		String sql = "SELECT id, category, customerId, title, content, date, status "
 				+ "FROM customercenter "
 				+ "ORDER BY id DESC "
-				+ "LIMIT ?, ?";// 시작(zero base), 개수, // (0, 5), (5, 10)...
+				+ "LIMIT ?, ?";// 시작(zero base), 개수, // (0, 5), (5, 5)...
 		ResultSet rs = null;
-		List<APost> list = new ArrayList<>();
+		List<Post> list = new ArrayList<>();
 		
-		try (PreparedStatement pstmt = conn.prepareStatement(sql)){// 1 5    6 10    11
-			pstmt.setInt(1, ( (pageNum - 1) / 5 + 1 ) * 5 - size);// ((pageNum -1) / 5 + 1) * 5 	 	// 1    2   3 * 5 
-			pstmt.setInt(2, ( (pageNum - 1) / 5 + 1 ) * 5 );
+		try (PreparedStatement pstmt = conn.prepareStatement(sql)){// 0 5 10 15 20 ... 
+			pstmt.setInt(1, (pageNum -1) * size);// pageNum: 1 -> (0, 5) / pageNum: 2 -> (5,10) ...
+			pstmt.setInt(2, size);
 			
 			rs = pstmt.executeQuery();
-			while(rs.next()) {// while... wyrano
-				APost post = new APost();
+			while(rs.next()) {
+				Post post = new Post();
 				post.setId(rs.getInt("id"));
 				post.setCategory(rs.getString("category"));
 				post.setCustomerId(rs.getString("customerId"));
@@ -83,12 +104,12 @@ public class PostDao {
 		}
 	}
 	
-	public APost selectById(Connection conn, int id) throws SQLException {
+	public Post selectById(Connection conn, int id) throws SQLException {
 		String sql = "SELECT id, category, customerId, title, content, date, status "
 				+ "FROM customercenter "
 				+ "WHERE id = ?";
 		ResultSet rs = null;
-		APost post = new APost();
+		Post post = null;
 		
 		try (PreparedStatement pstmt = conn.prepareStatement(sql);
 			){
@@ -96,6 +117,7 @@ public class PostDao {
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
+				post = new Post();
 				post.setId(rs.getInt("id"));
 				post.setCategory(rs.getString("category"));
 				post.setCustomerId(rs.getString("customerId"));
@@ -110,15 +132,53 @@ public class PostDao {
 		return post;
 	}
 	
-	public void update(Connection conn, UpdateReq req) throws SQLException {
+	public List<Post> selectMy(Connection conn, String id, int pageNum, int size) throws SQLException {
+		String sql = "SELECT id, category, customerId, title, content, date, status "
+				+ "FROM customercenter "
+				+ "WHERE customerId = ? "
+				+ "ORDER BY id DESC "
+				+ "LIMIT ?, ?";
+		ResultSet rs = null;
+		List<Post> list = new ArrayList<>();
+		
+		try (PreparedStatement pstmt = conn.prepareStatement(sql)){// 0 5 10 15 20 ... 
+			pstmt.setString(1, id);
+			pstmt.setInt(2, (pageNum -1) * size);// pageNum: 1 -> (0, 5) / pageNum: 2 -> (5,10) ...
+			pstmt.setInt(3, size);
+			
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				Post post = new Post();
+				post.setId(rs.getInt("id"));
+				post.setCategory(rs.getString("category"));
+				post.setCustomerId(rs.getString("customerId"));
+				post.setTitle(rs.getString("title"));
+				post.setContent(rs.getString("content"));
+				post.setDate(rs.getTimestamp("date"));
+				if(rs.getInt("status") == 0) {
+					post.setStatus("답변대기");
+				} else {
+					post.setStatus("답변완료");
+				}
+				list.add(post);
+			}
+			return list;
+			
+		} finally {
+			JDBCUtil.close(rs);
+		}
+	}
+	
+	public void update(Connection conn, ModifyReq modifyReq) throws SQLException {
 		String sql = "UPDATE customercenter "
-				+ "SET title = ?, content = ? "
+				+ "SET category = ?, title = ?, content = ? "
 				+ "WHERE id = ?";
 		
 		try (PreparedStatement pstmt = conn.prepareStatement(sql)){
-			pstmt.setString(1, req.getTitle());
-			pstmt.setString(2, req.getContent());
-			pstmt.setInt(3, req.getId());
+			pstmt.setString(1, modifyReq.getCategory());
+			pstmt.setString(2, modifyReq.getTitle());
+			pstmt.setString(3, modifyReq.getContent());
+			pstmt.setInt(4, modifyReq.getId());
 			
 			pstmt.executeUpdate();
 		}

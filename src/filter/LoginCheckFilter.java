@@ -40,11 +40,11 @@ public class LoginCheckFilter implements Filter {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
 		
-		HttpSession session = req.getSession(false);// 세션 있을 때만 얻어오기
+		HttpSession session = req.getSession();
 		
-		if(session == null || session.getAttribute("user") == null ) {
+		if(session.getAttribute("user") == null ) {
 			// 요청 저장, 로그인 하게 하고, 원래 요청으로 go
-			session.setAttribute("link", req.getRequestURI());
+			session.setAttribute("link", req.getRequestURL() + "?" + req.getQueryString());//
 			res.sendRedirect(req.getContextPath() + "/login.do");
 		} else {
 			chain.doFilter(request, response);			

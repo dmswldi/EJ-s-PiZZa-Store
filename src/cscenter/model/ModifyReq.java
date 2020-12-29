@@ -1,7 +1,8 @@
 package cscenter.model;
 
-public class UpdateReq {
+public class ModifyReq {
 	int id;
+	String category;
 	String title;
 	String content;
 	
@@ -10,6 +11,13 @@ public class UpdateReq {
 	}
 	public void setId(int id) {
 		this.id = id;
+	}
+	
+	public String getCategory() {
+		return category;
+	}
+	public void setCategory(String category) {
+		this.category = category;
 	}
 	
 	public String getTitle() {

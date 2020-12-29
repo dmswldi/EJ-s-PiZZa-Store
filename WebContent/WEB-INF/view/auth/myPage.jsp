@@ -46,8 +46,9 @@
 	  	</div>
 	  
       <div class="list-group list-group-flush list-hover">
-        <button class="list-group-item list-group-item-action">내 글 보기</button>
+        <button class="list-group-item list-group-item-action" onclick="location.href='${root}/cs/mylist.do'">내 글 보기</button>
         <button class="list-group-item list-group-item-action" onclick="location.href='${root}/modify.do'">회원 정보 수정</button>
+        <button class="list-group-item list-group-item-action" onclick="location.href='${root}/cs/list.do'">고객센터</button>
 	    <div class="list-group-item list-group-item-action"><a href="${root }/withdrawal.do" class="card-link"><small>회원 탈퇴</small></a></div>
       </div>
 	 

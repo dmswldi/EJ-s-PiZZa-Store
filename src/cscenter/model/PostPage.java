@@ -3,27 +3,33 @@ package cscenter.model;
 import java.util.List;
 
 public class PostPage {
-	private List<APost> list;
+	private List<Post> list;
 	private int total;
-	private int pageNum;
+	private int totalPages;
+	private int pageNum;// current page
 	private int size;
 	private int startPage;
 	private int endPage;
 	
-	public PostPage(List<APost> list, int total, int pageNum, int size) {
+	public PostPage(List<Post> list, int total, int pageNum, int size) {
 		this.list = list;
 		this.total = total;
+		if(total%size != 0) {
+			this.totalPages = total/size + 1;
+		} else {
+			this.totalPages = total/size;
+		}
 		this.pageNum = pageNum;
 		this.size = size;
-		this.startPage = ( (pageNum - 1) / 5 + 1 ) * 5 - size;
+		this.startPage = ( (pageNum - 1) / 5 + 1 ) * 5 - size + 1;
 		this.endPage = ( (pageNum - 1) / 5 + 1 ) * 5;
 	}
 
-	public List<APost> getList() {
+	public List<Post> getList() {
 		return list;
 	}
 
-	public void setList(List<APost> list) {
+	public void setList(List<Post> list) {
 		this.list = list;
 	}
 
@@ -33,6 +39,14 @@ public class PostPage {
 
 	public void setTotal(int total) {
 		this.total = total;
+	}
+
+	public int getTotalPages() {
+		return totalPages;
+	}
+
+	public void setTotalPages(int totalPages) {
+		this.totalPages = totalPages;
 	}
 
 	public int getPageNum() {

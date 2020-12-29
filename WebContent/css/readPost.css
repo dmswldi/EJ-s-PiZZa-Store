@@ -1,0 +1,5 @@
+@charset "UTF-8";
+
+small.text-muted:not(.text-center) {
+	display:inline;
+}

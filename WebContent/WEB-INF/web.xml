@@ -62,6 +62,9 @@
   	<url-pattern>/modify.do</url-pattern>
   	<url-pattern>/withdrawal.do</url-pattern>
   	<url-pattern>/cs/write.do</url-pattern>
+  	<url-pattern>/cs/read.do</url-pattern>
+  	<url-pattern>/cs/mylist.do</url-pattern>
+  	<url-pattern>/cs/modify.do</url-pattern>
   </filter-mapping>
   
 </web-app>
