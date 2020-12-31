@@ -60,7 +60,6 @@ public class PostDao {
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
-				System.out.println(rs.getInt(1));
 				return rs.getInt(1);
 			}
 		} finally {

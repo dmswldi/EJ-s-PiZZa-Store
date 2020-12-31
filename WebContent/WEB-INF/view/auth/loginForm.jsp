@@ -36,9 +36,9 @@
 			  <c:if test="${errors.pwNotMatch }">
 			    	<small class="form-text text-danger">Passwords is wrong.</small>
 			  </c:if>
-			  <div class="form-group form-check"> <%-- pass...... 세션, 쿠키, 쿠키 경로/... 세션 시간 한달 정도 --%>
+			  <div class="form-group form-check">
 			    <label class="form-check-label">
-			      <input class="form-check-input" type="checkbox"> Remember me
+			      <input class="form-check-input" type="checkbox" name="StayLoggedIn"> Remember me
 			    </label>
 			  </div>
 			  <button type="submit" class="btn btn-primary float-right">Sign in</button>

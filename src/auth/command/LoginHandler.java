@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -48,6 +49,20 @@ public class LoginHandler implements Handler {
 		}
 		
 		HttpSession session = req.getSession();
+		String stay = req.getParameter("StayLoggedIn");
+		if(stay != null && stay.equals("on")) {
+			session.setMaxInactiveInterval(604800);// second, 7 day
+			Cookie[] cookies = req.getCookies();
+			
+			for (Cookie cookie : cookies) {
+				if (cookie.getName().equals("JSESSIONID")) {
+					cookie.setMaxAge(604800);
+					cookie.setHttpOnly(true);
+					cookie.setPath(cookie.getPath());
+					res.addCookie(cookie);
+				}
+			}
+		}
 		session.setAttribute("user", customer);
 		
 		String requestedURI = (String) session.getAttribute("link");

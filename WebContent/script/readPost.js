@@ -27,15 +27,38 @@ $(function(){
 		$('#content').attr("readonly", true);
 	});
 	
-	$('#remove_btn').click(function(){
-		var con = confirm("Are you sure?");
-		if(con){
-			location.href = root + "/cs/remove.do?id=" + id;// root가 안 먹어!!!!!
-		}
+	
+	var comments;
+	$('.submitRepl_btn').hide();
+	$('.cancelRepl_btn').hide();
+	
+	$('.modifyRepl_btn').click(function(){
+		$('.submitRepl_btn').hide();
+		$('.cancelRepl_btn').hide();
+		$('.modifyRepl_btn').show();
+		$('.removeRepl_btn').show();
+		
+		$(this).hide();
+		$(this).next().hide();
+		$(this).prev().prev().show();
+		$(this).prev().show();
+		
+		$(this).closest("td").prev().find('.comments').removeAttr("readonly");
+		comments = $(this).closest("td").prev().find('.comments').val();
 	});
 	
-	$('#list').click(function(){
-		//history.go(-1);
-		location.href = root + "/cs/list.do?pageNo=" + pageNo;
+	$('.cancelRepl_btn').click(function(){// 취소하면 댓글 원래대로!!!!
+		$(this).next().show();
+		$(this).siblings('.removeRepl_btn').show();
+		$(this).prev().hide();
+		$(this).hide();
+			
+		$(this).closest("td").prev().find('.comments').val(comments);
+		$(this).closest("td").prev().find('.comments').attr("readonly", true);
 	});
+	
+	$('.submitRepl_btn').click(function(){
+		$(this).closest("td").prev().find('form').submit();
+	});
+
 })

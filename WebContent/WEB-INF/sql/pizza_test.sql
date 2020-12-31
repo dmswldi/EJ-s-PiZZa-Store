@@ -1,7 +1,9 @@
 use pizza;
 
-INSERT INTO customer (userId, name, password, phone, address)
-VALUES ('ee1', 'eunji', '123', '010-123-4567', 'doyojiro');
+INSERT INTO customer (userId, name, password, phone)
+VALUES ('joajoajoa8', 'kimjoa', 'joajoajoa8', '01022223333');
+INSERT INTO customer (userId, name, password, phone, ismanager)
+VALUES ('manager111', 'manager', 'manager111', '07027215678', 1);
 commit;
 SELECT * FROM customer;
 DELETE FROM customer
@@ -24,12 +26,13 @@ LIMIT 5, 10;-- (0, 5), (5, 10)
 -- 2: ( ( pageNum - 1) / 5 + 1 ) * 5 
 -- 1-(0, 5) 2-(6, 10)
 
+commit;
+DELETE FROM `pizza`.`comment`;
+SELECT * FROM `pizza`.`comment`;
 
-CREATE TABLE IF NOT EXISTS `pizza`.`CUSTOMERCENTER2` AS
-SELECT * FROM `pizza`.`CUSTOMERCENTER`;
-SELECT * FROM customercenter;
-INSERT INTO `pizza`.`CUSTOMERCENTER` (category, customerId, title, content)
-VALUES ('etc', 'joa', 'title', 'content');
-DELETE FROM `pizza`.`CUSTOMERCENTER`;
-DROP TABLE `pizza`.`CUSTOMERCENTER2`;
-INSERT INTO `pizza`.`CUSTOMERCENTER` SELECT * FROM `pizza`.`CUSTOMERCENTER2`;
+SELECT * FROM comment
+WHERE inquiryId = 8;
+
+INSERT INTO comment (inquiryId, customerId, comments, date )
+VALUES (8, "zozina", "i have same question", now());
+

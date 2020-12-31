@@ -28,6 +28,12 @@ public class CustomerDao {
 				customer.setPassword(rs.getString("password"));
 				customer.setPhone(rs.getString("phone"));
 				customer.setAddress(rs.getString("address"));
+				int isManager = rs.getInt("ismanager");
+				if(isManager == 1) {
+					customer.setManager(true);
+				} else {
+					customer.setManager(false);
+				}
 				
 				return customer;
 			}

@@ -31,6 +31,7 @@ CREATE TABLE IF NOT EXISTS `pizza`.`CUSTOMER` (
   `phone` VARCHAR(14) NOT NULL,
   `address` VARCHAR(100) NULL,
   `point` INT NOT NULL DEFAULT 0,
+  `ismanager` TINYINT NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `userId_UNIQUE` (`userId` ASC) VISIBLE)
   ENGINE = InnoDB;
@@ -107,14 +108,14 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `pizza`.`Comments`
+-- Table `pizza`.`COMMENT`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `pizza`.`Comments` ;
+DROP TABLE IF EXISTS `pizza`.`COMMENT` ;
 
-CREATE TABLE IF NOT EXISTS `pizza`.`Comments` (
+CREATE TABLE IF NOT EXISTS `pizza`.`COMMENT` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `inquiryId` INT NOT NULL,
-  `customerId` INT NOT NULL,
+  `customerId` VARCHAR(45) NOT NULL,
   `comments` VARCHAR(1000) NOT NULL,
   `date` DATETIME NOT NULL DEFAULT now(),
   PRIMARY KEY (`id`))

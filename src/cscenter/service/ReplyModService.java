@@ -3,24 +3,22 @@ package cscenter.service;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import cscenter.dao.PostDao;
 import cscenter.dao.ReplyDao;
+import cscenter.model.UpdateReplyReq;
 import init.ConnectionProvider;
 import init.JDBCUtil;
 
-public class RemoveService {
-	private PostDao postDao = new PostDao();
+public class ReplyModService {
 	private ReplyDao replyDao = new ReplyDao();
 
-	public void removePost(int id) {
+	public void modifyReply(UpdateReplyReq updateReq) {
 		Connection conn = null;
 		
 		try {
 			conn = ConnectionProvider.getConnection();
 			conn.setAutoCommit(false);
 			
-			postDao.delete(conn, id);
-			replyDao.deleteAll(conn, id);
+			replyDao.update(conn, updateReq);
 			conn.commit();
 		} catch(SQLException e) {
 			JDBCUtil.rollback(conn);
@@ -30,5 +28,5 @@ public class RemoveService {
 		}
 		
 	}
-	
+
 }

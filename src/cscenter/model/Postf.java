@@ -1,10 +1,10 @@
 package cscenter.model;
 
 public class Postf {
-	String category;
-	String customerId;
-	String title;
-	String content;
+	private String category;
+	private String customerId;
+	private String title;
+	private String content;
 	
 	public String getCategory() {
 		return category;

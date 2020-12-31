@@ -1,10 +1,10 @@
 package cscenter.model;
 
 public class ModifyReq {
-	int id;
-	String category;
-	String title;
-	String content;
+	private int id;
+	private String category;
+	private String title;
+	private String content;
 	
 	public int getId() {
 		return id;

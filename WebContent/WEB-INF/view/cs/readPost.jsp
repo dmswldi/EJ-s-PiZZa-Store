@@ -12,13 +12,31 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-<script>
-var root = "${root }";
-var id = "${post.id }";
-var pageNo = "${pageNum }";
-</script>
 <script type="text/javascript" src="${root }/script/readPost.js"></script>
 <link href="${root }/css/readPost.css" rel="stylesheet" type="text/css">
+<script>
+var ctx = '${root}';
+
+$(function(){
+	$('#remove_btn').click(function(){
+		var con = confirm("Are you sure?");
+		if(con){
+			location.href = ctx + "/cs/remove.do?id=" + ${post.id };
+		}
+	});
+	
+	$('.removeRepl_btn').click(function(){
+		var con = confirm("Are you sure?");
+		var id = $(this).closest("td").prev().find(".commentId").val();
+		var postId = ${post.id};
+		var pageNo = ${pageNo };
+		if(con){
+			location.href = ctx + "/cs/reply/delete.do?id=" + id + "&postId=" + postId + "&pageNo=" + pageNo;
+		}
+	});
+	
+})
+</script>
 <title>EJ's Pizza Store</title>
 </head>
 <body>
@@ -36,8 +54,8 @@ var pageNo = "${pageNum }";
 			  <input type="text" name="pageNo" value="${pageNo }" hidden=true>
 			  <div class="form-group">
 			    <fmt:formatDate var="date" value="${post.date }" pattern="yyyy-MM-dd HH:mm"/>
-			    <small class="form-text text-muted">${post.customerId }</small>
-			    <small class="form-text text-muted float-right">${date }</small>
+			    <small class="form-text text-muted d-inline">${post.customerId }</small>
+			    <small class="form-text text-muted float-right d-inline">${date }</small>
 			  </div>
 			  <div class="form-group">
 			  	<label for="category">종류</label>
@@ -62,18 +80,71 @@ var pageNo = "${pageNum }";
 			  <button class="btn btn-primary float-right" id="modify_btn">Modify</button>
 			  <button class="btn btn-danger float-right mr-1" id="remove_btn">Remove</button>
 			</c:if>
-			<button class="btn btn-secondary" id="list">글 목록</button>
-			
-			<%-- comment --%>
-			<form action="" method="post">
-			  <div class="form-group">
-			    <label for="comments" style="display:inline">comments</label>
-			    <input type="text" class="form-control" id="comments" name="comments" required  style="display:inline">
-			    <button type="submit" class="btn btn-primary float-right" id="submit_btn"  style="display:inline">Save</button>
-			  </div>
-			</form>
+			<a href="${root }/cs/list.do?pageNo=${pageNo }" class="btn btn-secondary" id="list">글 목록</a>
+			<hr />
 		</div>
 	</div>
+</div>
+
+
+<%-- comment --%>
+<div class="container">
+  <div class="row">
+	<div class="col-1"></div>
+	<div class="col-10">
+		<form action="${root }/cs/reply/add.do" method="post">
+		  <input type="text" name="id" value="${post.id }" hidden=true>
+		  <input type="text" name="pageNo" value="${pageNo }" hidden=true>
+		  <div class="form-group d-flex justify-content-around">
+		    <label for="comments">comments </label>
+		    <small class="text-muted">&nbsp;${replyCnt }</small>
+		    <input type="text" class="form-control mx-3" id="comments" name="comments" required>
+		    <button type="submit" class="btn btn-primary float-right">Save</button>
+		  </div>
+		</form>
+		<%-- existing comments --%>
+		<table class="table">
+		  <tbody>
+		  	<c:if test="${empty comments }">
+		  		<tr>
+			  		<td colspan="2"><small class="text-muted">댓글이 없습니다. 댓글을 남겨주세요 :)</small></td>
+		  		</tr>
+		  	</c:if>
+		  	<c:forEach items="${comments }" var="comment">
+				<tr>
+					<td class="px-0">
+						<c:if test="${comment.stateChangable }">
+								<c:set var="manager" value="manager" />
+						</c:if>
+							
+				  		<form action="${root }/cs/reply/modify.do" method="post" class="d-flex justify-content-around align-items-center px-0">
+							<input type="text" name="postId" value="${post.id }" hidden=true>
+							<input type="text" name="pageNo" value="${pageNo }" hidden=true>
+							<input type="text" class="commentId" name="commentId" value="${comment.id }" hidden=true>
+							<input type="text" class="form-control border-0 bg-white" name="customerId" value="${comment.customerId }" readonly>
+						    <input type="text" class="form-control border-0 bg-white ${manager } comments" name="comments" value="${comment.comment }" required readonly>
+						    <fmt:formatDate var="Cdate" value="${comment.date }" pattern="yyyy-MM-dd HH:mm"/>
+						    <input type="text" class="form-control border-0 bg-white" name="date" value="${Cdate }" readonly>
+						</form>
+						
+						<c:remove var="manager" />
+					</td>
+					<td class="px-0">
+					   <div class="d-flex justify-content-around align-items-center">
+						  <c:if test="${comment.customerId eq sessionScope.user.id }">
+						    <button type="submit" class="btn btn-white float-right submitRepl_btn p-1">Save</button>
+						    <button class="btn btn-white float-right cancelRepl_btn p-1">Cancel</button>
+						    <button class="btn btn-white float-right modifyRepl_btn p-1">Modify</button>
+						    <button class="btn btn-white float-right removeRepl_btn p-1">Remove</button>
+						  </c:if>	
+					    </div>
+					</td>
+				</tr>
+		  	</c:forEach>
+		  </tbody>
+		</table>
+	</div>
+  </div>
 </div>
 </body>
 </html>

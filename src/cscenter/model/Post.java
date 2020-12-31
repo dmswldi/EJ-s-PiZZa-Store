@@ -3,13 +3,13 @@ package cscenter.model;
 import java.util.Date;
 
 public class Post {
-	int id;
-	String category;
-	String customerId;
-	String title;
-	String content;
-	Date date;
-	String status;
+	private int id;
+	private String category;
+	private String customerId;
+	private String title;
+	private String content;
+	private Date date;
+	private String status;
 	
 	public int getId() {
 		return id;

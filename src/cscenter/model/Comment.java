@@ -3,10 +3,19 @@ package cscenter.model;
 import java.util.Date;
 
 public class Comment {
+	private int id;
 	private int inquiryId;
-	private int customerId;
-	private String comments;
+	private String customerId;
+	private String comment;
 	private Date date;
+	private boolean stateChangable;
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	
 	public int getInquiryId() {
 		return inquiryId;
@@ -15,18 +24,18 @@ public class Comment {
 		this.inquiryId = inquiryId;
 	}
 	
-	public int getCustomerId() {
+	public String getCustomerId() {
 		return customerId;
 	}
-	public void setCustomerId(int customerId) {
+	public void setCustomerId(String customerId) {
 		this.customerId = customerId;
 	}
 	
-	public String getComments() {
-		return comments;
+	public String getComment() {
+		return comment;
 	}
-	public void setComments(String comments) {
-		this.comments = comments;
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 	
 	public Date getDate() {
@@ -35,5 +44,14 @@ public class Comment {
 	public void setDate(Date date) {
 		this.date = date;
 	}
+	
+	public boolean isStateChangable() {
+		return stateChangable;
+	}
+	public void setStateChangable(boolean stateChangable) {
+		this.stateChangable = stateChangable;
+	}
+	
+	
 	
 }

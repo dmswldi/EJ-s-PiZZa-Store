@@ -65,6 +65,9 @@
   	<url-pattern>/cs/read.do</url-pattern>
   	<url-pattern>/cs/mylist.do</url-pattern>
   	<url-pattern>/cs/modify.do</url-pattern>
+  	<url-pattern>/cs/reply/add.do</url-pattern>
+  	<url-pattern>/cs/reply/modify.do</url-pattern>
+  	<url-pattern>/cs/reply/delete.do</url-pattern>
   </filter-mapping>
   
 </web-app>

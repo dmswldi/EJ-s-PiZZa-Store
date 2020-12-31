@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ page import="cscenter.model.PostPage"  %>
 <!DOCTYPE html>
@@ -39,11 +40,26 @@
 	  		  <td colspan="5"><small class="text-muted">게시글이 존재하지 않습니다.</small></td>
 	  		</tr>
 	  	</c:if>
+	  	<c:set var="cnt" value="-1" />
   	    <c:forEach items="${page.list }" var="post">
+  	      <c:set var="cnt" value="${cnt + 1}" />
 	      <tr class="modifiable" onclick="location.href='${root }/cs/read.do?id=${post.id }&pageNo=${page.pageNum }'">
 	        <th scope="row">${post.id }</th>
-	        <td>${post.category }</td>
-	        <td>${post.title }</td>
+	        <td>${post.category }
+	        </td>
+	        <td>${post.title } <small class="text-muted">[${replyCntList.get(cnt) }] </small>
+	        	<fmt:parseDate value="${post.date }" var="postedDate" pattern="yyyy-MM-dd HH:mm" />
+	        	<fmt:parseNumber value="${postedDate.time / (1000*60*60) }" var="postedNum" integerOnly="true" />
+	        	
+	        	<jsp:useBean class="java.util.Date" id="getDate" />
+	        	<fmt:formatDate value="${getDate }" var="currDate" pattern="yyyy-MM-dd HH:mm" />
+	        	<fmt:parseDate value="${currDate }" var="curDate" pattern="yyyy-MM-dd HH:mm" />
+	        	<fmt:parseNumber value="${curDate.time / (1000*60*60) }" var="curNum" integerOnly="true" />
+	        	
+	        	<c:if test="${(curNum-postedNum) / 24 < 2.4 }">
+	        		<span class="badge badge-danger">New</span> <%-- in 1 day --%>
+	        	</c:if>
+	        </td>
 	        <td>${post.customerId }</td>
 	        <td>${post.status }</td>
 	      </tr>

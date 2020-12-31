@@ -7,6 +7,7 @@ public class Customer {
 	private String phone;
 	private String address;
 	private int point;
+	private boolean isManager;
 	
 	public String getId() {
 		return id;
@@ -48,6 +49,13 @@ public class Customer {
 	}
 	public void setPoint(int point) {
 		this.point = point;
+	}
+	
+	public boolean isManager() {
+		return isManager;
+	}
+	public void setManager(boolean isManager) {
+		this.isManager = isManager;
 	}
 	
 	public Boolean matchPassword(String password) {

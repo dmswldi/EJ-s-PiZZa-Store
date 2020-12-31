@@ -39,11 +39,13 @@
 	  		  <td colspan="5"><small class="text-muted">게시글이 존재하지 않습니다.</small></td>
 	  		</tr>
 	  	</c:if>
+	  	<c:set var="cnt" value="-1" />
   	    <c:forEach items="${page.list }" var="post">
+  	      <c:set var="cnt" value="${cnt + 1}" />
 	      <tr class="modifiable" onclick="location.href='${root }/cs/read.do?id=${post.id }&pageNo=${page.pageNum }'">
 	        <th scope="row">${post.id }</th>
 	        <td>${post.category }</td>
-	        <td>${post.title }</td>
+	        <td>${post.title } <small class="text-muted">[${replyCntList.get(cnt) }]</small></td>
 	        <td>${post.customerId }</td>
 	        <td>${post.status }</td>
 	      </tr>

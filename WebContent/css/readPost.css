@@ -1,5 +1,42 @@
 @charset "UTF-8";
 
-small.text-muted:not(.text-center) {
-	display:inline;
+table input:nth-child(4) {
+	width: 15%;
+}
+
+table input:nth-child(5) {
+	width: 63%;
+}
+
+table input:nth-child(6) {
+	width: 22%;
+}
+
+table button.btn {
+	font-size: 13px;
+	border: none;
+	transition: 0.3s;
+	position: relative;
+}
+
+table button.btn::before {
+	content: '';
+	border-bottom: 1px solid black;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: 0 auto;
+	width: 0;
+	transition: 0.3s;
+}
+
+table button.btn:hover::before{
+	padding: 0px; /* trick */
+    width: 100%;
+}
+
+form input.manager {
+	font-weight: bold;
+	text-decoration: underline;
 }
