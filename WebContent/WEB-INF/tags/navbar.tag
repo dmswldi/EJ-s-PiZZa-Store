@@ -15,22 +15,22 @@
   <div class="collapse navbar-collapse" id="navbar0">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="${root }/menu.do">메뉴<span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="${root }/menu.do">메뉴</a>
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           바로 주문
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="${root }/order.do?hotg=0">배달</a>
-          <a class="dropdown-item" href="${root }/order.do?hotg=1">포장</a>
+          <a class="dropdown-item" href="${root }/order.do?dorw=0">배달</a>
+          <a class="dropdown-item" href="${root }/order.do?dorw=1">포장</a>
           <div class="dropdown-divider"></div>
           
           <a class="dropdown-item" href="#">예약</a>
         </div>
       </li>
       <li class="nav-item mr-auto">
-        <a class="nav-link" href="#">매장</a>
+        <a class="nav-link" href="${root }/store.do">매장</a>
       </li>
     </ul>
     <ul class="navbar-nav">
