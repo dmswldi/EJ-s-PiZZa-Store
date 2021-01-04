@@ -16,6 +16,8 @@ $(function(){
 		$(this).css('background-color', '#ced4da');
 	});
 	
+	
+	
 	$(function(){
 		stickyFooter();
 		$(window).scroll(stickyFooter).resize(stickyFooter);

@@ -18,6 +18,9 @@ public class ReplyDao {
 		String sql = "INSERT INTO comment "
 				+ "(inquiryId, customerId, comments, date ) "
 				+ "VALUES (?, ?, ?, now()) ";
+		/*String sql = "INSERT INTO comment0 "
+				+ "(inquiryId, customerId, comments, date0 ) "
+				+ "VALUES (?, ?, ?, sysdate) ";*/
 		
 		try (PreparedStatement pstmt = conn.prepareStatement(sql)){
 			pstmt.setInt(1, comment.getInquiryId());
@@ -44,7 +47,7 @@ public class ReplyDao {
 	}
 	
 	public int count(Connection conn, int inquiryId) throws SQLException {
-		String sql = "SELECT count(*) FROM comment "
+		String sql = "SELECT count(*) FROM comment "///
 				+ "WHERE inquiryId = ?";
 		ResultSet rs = null;
 		int cnt = 0;
@@ -64,9 +67,9 @@ public class ReplyDao {
 
 	// 해당 게시글의 댓글 읽어오기
 	public List<Comment> select(Connection conn, int id) throws SQLException {
-		String sql = "SELECT * FROM comment "
+		String sql = "SELECT * FROM comment "///
 				+ "WHERE inquiryId = ? "
-				+ "ORDER BY date DESC";
+				+ "ORDER BY date DESC";///
 		ResultSet rs = null;
 		List<Comment> list = null;
 		
@@ -81,7 +84,7 @@ public class ReplyDao {
 				comment.setInquiryId(rs.getInt("inquiryId"));
 				comment.setCustomerId(rs.getString("customerId"));
 				comment.setComment(rs.getString("comments"));
-				comment.setDate(rs.getTimestamp("date"));
+				comment.setDate(rs.getTimestamp("date"));///
 				if(isManager(conn, rs.getString("customerId"))) {					
 					comment.setStateChangable(true);
 				} else {
@@ -119,7 +122,7 @@ public class ReplyDao {
 	}
 
 	public void update(Connection conn, UpdateReplyReq updateReq) throws SQLException {
-		String sql = "UPDATE comment "
+		String sql = "UPDATE comment "///
 				+ "SET comments = ? "
 				+ "WHERE id = ?";
 		
@@ -133,7 +136,7 @@ public class ReplyDao {
 	}
 	
 	public void delete(Connection conn, int replyId) throws SQLException{
-		String sql = "DELETE FROM comment "
+		String sql = "DELETE FROM comment "///
 				+ "WHERE id = ?";
 		
 		try (PreparedStatement pstmt = conn.prepareStatement(sql)){
@@ -144,7 +147,7 @@ public class ReplyDao {
 	}
 	
 	public void deleteAll(Connection conn, int postId) throws SQLException{
-		String sql = "DELETE FROM comment "
+		String sql = "DELETE FROM comment "///
 				+ "WHERE inquiryId = ?";
 		
 		try (PreparedStatement pstmt = conn.prepareStatement(sql)){

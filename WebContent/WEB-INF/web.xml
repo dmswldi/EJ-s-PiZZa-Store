@@ -12,20 +12,23 @@
   
   <context-param>
   	<param-name>jdbcUrl</param-name>
-<!--   	<param-value>jdbc:mysql://localhost:3306/pizza?useSSL=false&amp;characterEncoding=UTF-8&amp;serverTimezone=Asia/Seoul</param-value> -->
-	<param-value>jdbc:oracle:thin:@mydb501_high?TNS_ADMIN=C:/Users/eunzi/Documents/Wallet_mydb501</param-value>
+  	<param-value>jdbc:mysql://localhost:3306/pizza?useSSL=false&amp;characterEncoding=UTF-8&amp;serverTimezone=Asia/Seoul</param-value>
+<!-- 	<param-value>jdbc:oracle:thin:@mydb501_high?TNS_ADMIN=C:/Users/eunzi/Documents/Wallet_mydb501</param-value> -->
+<!-- 	<param-value>jdbc:oracle:thin:@db202101040942_high?TNS_ADMIN=/home/opc/wallet</param-value> -->
   </context-param>
   
   <context-param>
   	<param-name>jdbcUser</param-name>
-<!--   	<param-value>root</param-value> -->
-  	<param-value>mydb06</param-value>
+  	<param-value>root</param-value>
+<!--   	<param-value>mydb06</param-value> -->
+<!--   	<param-value>admin</param-value> -->
   </context-param>
   
   <context-param>
   	<param-name>jdbcPw</param-name>
-<!--   	<param-value>7542</param-value> -->
-	<param-value>adminAdmin12</param-value>
+  	<param-value>7542</param-value>
+<!-- 	<param-value>adminAdmin12</param-value> -->
+<!-- 	<param-value>Pizzastore10004</param-value> -->
   </context-param>
   
   <servlet>

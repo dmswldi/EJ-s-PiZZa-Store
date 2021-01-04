@@ -37,8 +37,8 @@ public class InitListener implements ServletContextListener {
     	String pw = application.getInitParameter("jdbcPw");
     	
     	try {
-//			Class.forName("com.mysql.cj.jdbc.Driver");// class loading 1번만!
-    		Class.forName("oracle.jdbc.driver.OracleDriver");
+			Class.forName("com.mysql.cj.jdbc.Driver");// class loading 1번만!
+//    		Class.forName("oracle.jdbc.driver.OracleDriver");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}

@@ -12,6 +12,13 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 <script type="text/javascript" src="${root }/script/newOrder.js"></script>
+<script>
+$(function(){
+	$('.toCart').click(function(){
+		
+	});
+});
+</script>
 <style>
 footer {
 	position: fixed;
@@ -55,6 +62,8 @@ footer {
 						      <div class="card-body">
 						        <h5 class="card-title">${menu.name }</h5>
 						        <p class="card-text">${menu.price }원</p>
+						        <button class="btn btn-primary d-inline float-right toCart">Add to Cart</button>
+						        <c:set var="menu" value="${menu }" />
 						      </div>
 						    </div>
 						  </div>
@@ -73,8 +82,8 @@ footer {
 		<a class="btn btn-primary" id="next" href="#">Next</a>
 	</div>
 	<br />
-	<footer>
-    	<span class="text-center">하단 필요내용을 입력</span>
+	<footer class="text-center">
+    	<span>하단 필요내용을 입력</span>
 	</footer>
 </div>
 

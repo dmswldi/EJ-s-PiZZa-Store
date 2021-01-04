@@ -50,13 +50,43 @@ CREATE TABLE IF NOT EXISTS `pizza`.`MENU` (
   `orderCount` INT NOT NULL DEFAULT 0,
   `description` VARCHAR(20000) NULL,
   `rating` INT NOT NULL DEFAULT 0,
-  `category` VARCHAR(45) NOT NULL CHECK (`category` IN ('standard', 'premium')),
-  `review` VARCHAR(1000) NULL,
-  `storeId` INT NOT NULL,
+  `category` VARCHAR(45) NOT NULL CHECK (`category` IN ('classic', 'premium')),
+  `reviewId` INT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE)
 ENGINE = InnoDB;
 
+INSERT INTO menu (name, price, category)
+VALUES ('Combination', 15900, 'classic');
+INSERT INTO menu (name, price, category)
+VALUES ('Bulgogi Pizza', 16900, 'classic');
+INSERT INTO menu (name, price, category)
+VALUES ('Pepperoni Pizza', 15900, 'classic');
+INSERT INTO menu (name, price, category)
+VALUES ('Brown Pepper Pizza', 16900, 'classic');
+INSERT INTO menu (name, price, category)
+VALUES ('Margarita Pizza', 17400, 'premium');
+INSERT INTO menu (name, price, category)
+VALUES ('Barbecue Pizza', 18900, 'premium');
+INSERT INTO menu (name, price, category)
+VALUES ('Bacon Cheese Pizza', 18900, 'premium');
+INSERT INTO menu (name, price, category)
+VALUES ('Tomato Basil Pizza', 17400, 'premium');
+
+SELECT * FROM menu;
+
+-- -----------------------------------------------------
+-- Table `mydb`.`REVIEW`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `pizza`.`REVIEW` ;
+
+CREATE TABLE IF NOT EXISTS `pizza`.`REVIEW` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `menuId` INT NOT NULL,
+  `review` VARCHAR(1000) NOT NULL,
+  `customerId` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
 
 -- -----------------------------------------------------
 -- Table `pizza`.`CART`
@@ -131,13 +161,21 @@ CREATE TABLE IF NOT EXISTS `pizza`.`STORE` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `loc` VARCHAR(200) NOT NULL,
-  `number` INT NULL,
+  `number` VARCHAR(45) NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `number_UNIQUE` (`number` ASC) VISIBLE,
   UNIQUE INDEX `loc_UNIQUE` (`loc` ASC) VISIBLE,
   UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE)
 ENGINE = InnoDB;
 
+INSERT INTO store (name, loc, number)
+VALUES ('이대점', '서울특별시 서대문구 123-1', '070-1234-2424');
+INSERT INTO store (name, loc, number)
+VALUES ('홍대점', '서울특별시 마포구 234-2', '070-5678-2424');
+INSERT INTO store (name, loc, number)
+VALUES ('검암점', '인천광역시 서구 345-3', '070-0987-2424');
+
+SELECT * FROM store;
 
 -- -----------------------------------------------------
 -- Table `pizza`.`ORDER`
@@ -152,7 +190,7 @@ CREATE TABLE IF NOT EXISTS `pizza`.`ORDER` (
   `totalPrice` INT NOT NULL DEFAULT 0,
   `detination` VARCHAR(200) NOT NULL,
   `status` VARCHAR(45) NOT NULL CHECK (`status` IN ('주문완료','결제완료')),
-  `hereOrTogo` TINYINT NOT NULL,
+  `togoOrWrap` TINYINT NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `customerId_UNIQUE` (`customerId` ASC) VISIBLE,
   UNIQUE INDEX `storeId_UNIQUE` (`storeId` ASC) VISIBLE)

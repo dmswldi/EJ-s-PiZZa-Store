@@ -72,6 +72,18 @@ VALUES ('Tomato Basil Pizza', 17400, 'premium');
 SELECT * FROM menu;
 
 -- -----------------------------------------------------
+-- Table `mydb`.`REVIEW`
+-- -----------------------------------------------------
+DROP TABLE REVIEW;
+
+CREATE TABLE REVIEW (
+  id NUMBER GENERATED AS IDENTITY,
+  menuId INT NOT NULL,
+  review VARCHAR2(1000) NOT NULL,
+  customerId VARCHAR2(45) NOT NULL,
+  PRIMARY KEY (id));
+
+-- -----------------------------------------------------
 -- Table `pizza`.`CART`
 -- -----------------------------------------------------
 DROP TABLE CART;
