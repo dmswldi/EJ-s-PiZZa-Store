@@ -6,14 +6,18 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import auth.model.Customer;
 import controller.Handler;
+import order.model.Cart;
 import order.model.Menu;
 import order.model.Store;
-import order.service.ReadMenuService;
+import order.service.CartService;
+import order.service.ReadService;
 
 public class OrderHandler implements Handler {
 	private static final String FORM_VIEW = "order/newOrder";
-	private ReadMenuService readMenuSvc = new ReadMenuService();
+	private ReadService readSvc = new ReadService();
+	private CartService cartSvc = new CartService();
 	
 	@Override
 	public String process(HttpServletRequest req, HttpServletResponse res) throws IOException {	
@@ -28,19 +32,19 @@ public class OrderHandler implements Handler {
 	}
 
 	private String processForm(HttpServletRequest req, HttpServletResponse res) {
-		int dorw = Integer.parseInt(req.getParameter("dorw"));
+		Customer customer = (Customer) req.getSession().getAttribute("user");
 		
-		List<Menu> menus = readMenuSvc.readMenu();
-		List<Store> stores = readMenuSvc.readStore();
+		List<Menu> menus = readSvc.readMenu();
+		List<Store> stores = readSvc.readStore();
+		List<Cart> cartList = cartSvc.getCart(customer.getId());
 		
+		req.setAttribute("dorw", req.getParameter("dorw"));//??? req 공유되는데 왜 설정해줘야 하지?
 		req.setAttribute("menus", menus);
 		req.setAttribute("stores", stores);
-		
-		if(dorw == 0) {// 배달
-			req.setAttribute("dorw", "delivery");
-		} else if(dorw == 1) {// 포장
-			req.setAttribute("dorw", "takeout");
+		if(cartList != null) {
+			req.setAttribute("cart", cartList);
 		}
+		
 		return FORM_VIEW;
 	}
 

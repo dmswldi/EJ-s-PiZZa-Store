@@ -10,7 +10,7 @@ import order.dao.OrderDao;
 import order.model.Menu;
 import order.model.Store;
 
-public class ReadMenuService {
+public class ReadService {
 	private OrderDao orderDao = new OrderDao();
 	
 	public List<Menu> readMenu() {

@@ -96,11 +96,9 @@ DROP TABLE IF EXISTS `pizza`.`CART` ;
 CREATE TABLE IF NOT EXISTS `pizza`.`CART` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `menuId` INT NOT NULL,
-  `price` INT NOT NULL,
   `ea` INT NOT NULL DEFAULT 1,
-  `curtomerId` INT NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `curtomerId_UNIQUE` (`curtomerId` ASC) VISIBLE)
+  `customerId` INT NOT NULL,
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 
@@ -112,10 +110,7 @@ DROP TABLE IF EXISTS `pizza`.`ORDERDETAIL` ;
 CREATE TABLE IF NOT EXISTS `pizza`.`ORDERDETAIL` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `orderId` INT NOT NULL,
-  `menuId` INT NOT NULL,
-  `ea` INT NOT NULL DEFAULT 1,
-  `price` INT NOT NULL,
-  `discount` INT NOT NULL DEFAULT 0,
+  `cartId` INT NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -188,6 +183,7 @@ CREATE TABLE IF NOT EXISTS `pizza`.`ORDER` (
   `storeId` INT NOT NULL,
   `orderDate` DATETIME NOT NULL DEFAULT now(),
   `totalPrice` INT NOT NULL DEFAULT 0,
+  `totalDiscount` INT NOT NULL DEFAULT 0,
   `detination` VARCHAR(200) NOT NULL,
   `status` VARCHAR(45) NOT NULL CHECK (`status` IN ('주문완료','결제완료')),
   `togoOrWrap` TINYINT NOT NULL,

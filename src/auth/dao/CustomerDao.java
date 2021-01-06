@@ -43,6 +43,25 @@ public class CustomerDao {
 		
 		return null;
 	}
+	
+	public Integer getPK(Connection conn, String userId) throws SQLException {
+		String sql = "SELECT id FROM customer "
+				+ "WHERE userId = ?";
+		ResultSet rs = null;
+		
+		try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setString(1, userId);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				return rs.getInt("id");
+			}
+		} finally {
+			JDBCUtil.close(rs);
+		}
+		
+		return null;
+	}
 
 	public void insert(Connection conn, JoinRequest joinReq) throws SQLException {
 		String sql = "INSERT INTO customer "

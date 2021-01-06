@@ -7,17 +7,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import controller.Handler;
-import order.model.Menu;
 import order.model.Store;
-import order.service.ReadMenuService;
+import order.service.ReadService;
 
 public class ViewStoreHandler implements Handler {
 	private static final String FORM_VIEW = "order/viewStore";
-	private ReadMenuService readMenuSvc = new ReadMenuService();
+	private ReadService readSvc = new ReadService();
 	
 	@Override
 	public String process(HttpServletRequest req, HttpServletResponse res) throws IOException {
-		List<Store> stores = readMenuSvc.readStore();
+		List<Store> stores = readSvc.readStore();
 		req.setAttribute("stores", stores);
 		
 		return FORM_VIEW;

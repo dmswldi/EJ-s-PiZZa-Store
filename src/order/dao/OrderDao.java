@@ -58,7 +58,7 @@ public class OrderDao {
 				store.setId(rs.getInt("id"));
 				store.setName(rs.getString("name"));
 				store.setLoc(rs.getString("loc"));
-				store.setNumber(rs.getString("number0"));///// -> number
+				store.setNumber(rs.getString("number"));///// -> number
 				list.add(store);
 			}
 		} finally {

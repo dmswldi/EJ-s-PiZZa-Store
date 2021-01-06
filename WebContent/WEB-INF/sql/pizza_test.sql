@@ -3,7 +3,7 @@ use pizza;
 INSERT INTO customer (userId, name, password, phone)
 VALUES ('joajoajoa8', 'kimjoa', 'joajoajoa8', '01022223333');
 INSERT INTO customer (userId, name, password, phone, ismanager)
-VALUES ('manager111', 'manager', 'manager111', '07027215678', 1);
+VALUES ('EJs Pizza Store', 'manager', 'manager010', '07027215678', 1);
 commit;
 SELECT * FROM customer;
 DELETE FROM customer
@@ -36,3 +36,5 @@ WHERE inquiryId = 8;
 INSERT INTO comment (inquiryId, customerId, comments, date )
 VALUES (8, "zozina", "i have same question", now());
 
+SELECT * FROM cart;
+DELETE FROM cart;

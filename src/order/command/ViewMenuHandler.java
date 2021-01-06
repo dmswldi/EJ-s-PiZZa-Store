@@ -8,15 +8,15 @@ import javax.servlet.http.HttpServletResponse;
 
 import controller.Handler;
 import order.model.Menu;
-import order.service.ReadMenuService;
+import order.service.ReadService;
 
 public class ViewMenuHandler implements Handler {
 	private static final String FORM_VIEW = "order/viewMenu";
-	private ReadMenuService readMenuSvc = new ReadMenuService();
+	private ReadService readSvc = new ReadService();
 	
 	@Override
 	public String process(HttpServletRequest req, HttpServletResponse res) throws IOException {
-		List<Menu> menus = readMenuSvc.readMenu();
+		List<Menu> menus = readSvc.readMenu();
 		req.setAttribute("menus", menus);
 		
 		return FORM_VIEW;

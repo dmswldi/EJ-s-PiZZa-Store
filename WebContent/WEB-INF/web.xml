@@ -75,6 +75,7 @@
   	<url-pattern>/cs/reply/modify.do</url-pattern>
   	<url-pattern>/cs/reply/delete.do</url-pattern>
   	<url-pattern>/order.do</url-pattern>
+  	<url-pattern>/cart/add.do</url-pattern>
   </filter-mapping>
   
 </web-app>

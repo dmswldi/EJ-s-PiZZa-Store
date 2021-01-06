@@ -12,23 +12,54 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 <script type="text/javascript" src="${root }/script/newOrder.js"></script>
-<script>
-$(function(){
-	$('.toCart').click(function(){
-		
-	});
-});
-</script>
 <style>
-footer {
+footer { <%-- 임시 --%>
 	position: fixed;
 	z-index: 30;
 	background-color: yellow;
 }
 </style>
 <title>EJ's Pizza Store</title>
+
+<script>
+/*
+$(function() {
+	var url = "cart";
+	var data = {
+			abc: "def",
+			d: 3
+	};
+	
+	$("#btn-1").click(function() {
+		$.post(url, data, function() {
+			console.log("성공");
+		});
+	});
+	
+	
+});*/
+
+$(function(){
+	var result;
+	var url = "/cart";/* ${root } +  붙여주면?*/ 
+			
+	$('.addToCart').click(function(){
+		var data = {
+			menuId: $(this).siblings('form').find('.menuId').val(),
+			ea: $(this).siblings('form').find('div').find('input').val()
+		};
+		$.post(url, data, function(data){
+			/*result = data.dataList;
+			/*console.log(result);*/
+			$('#ea').val(data);
+			console.log("성공");
+		});
+	});
+});
+</script>
 </head>
 <body>
+<button id="btn-1">ajax</button>
 <t:navbar />
 
 <div class="container mt-5"  data-spy="scroll" data-target="#prev" data-offset="0">
@@ -62,8 +93,15 @@ footer {
 						      <div class="card-body">
 						        <h5 class="card-title">${menu.name }</h5>
 						        <p class="card-text">${menu.price }원</p>
-						        <button class="btn btn-primary d-inline float-right toCart">Add to Cart</button>
-						        <c:set var="menu" value="${menu }" />
+						        <form class="text-center">
+						        	<input type="text" name="menuId" class="menuId" value="${menu.id }" hidden=true />
+							        <div class="rounded-pill border py-2">
+										<i class="fas fa-minus"></i>
+										<input type="number" class="border-0 text-center" name="ea" value="1" readonly>
+										<i class="fas fa-plus"></i>
+									</div>
+						        </form>
+							    <button class="btn btn-primary float-right mt-2 addToCart">Add to Cart</button>
 						      </div>
 						    </div>
 						  </div>
@@ -83,7 +121,13 @@ footer {
 	</div>
 	<br />
 	<footer class="text-center">
-    	<span>하단 필요내용을 입력</span>
+<%-- 		<c:set var="" value=""></c:set> --%>
+<%--     	<c:if test=""></c:if> --%>
+    	<form action="">
+    		<c:forEach items="${cart }" var="cart">
+    			<input type="text" id="ea" name="ea" />
+    		</c:forEach>
+    	</form>
 	</footer>
 </div>
 
@@ -110,7 +154,7 @@ footer {
 			    <input type="text" class="form-control" id="phone" name="phone" value="${sessionScope.user.phone }" required>
 		    </div>
 	
-			<c:if test="${dorw eq 'delivery' }">
+			<c:if test="${dorw eq 0 }"> <!-- delivery -->
 			  <div class="form-group">
 			    <label for="address">Address</label>
 			    <input type="text" class="form-control" id="address" name="address" value="${sessionScope.user.address }" required>
