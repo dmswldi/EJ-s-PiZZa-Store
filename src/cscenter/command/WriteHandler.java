@@ -34,7 +34,7 @@ public class WriteHandler implements Handler {
 		Customer customer = (Customer) req.getSession().getAttribute("user");
 		Postf post = new Postf();
 		post.setCategory(req.getParameter("category"));
-		post.setCustomerId(customer.getId());
+		post.setCustomerId(customer.getUserId());
 		post.setTitle(req.getParameter("title"));
 		post.setContent(req.getParameter("content"));
 		

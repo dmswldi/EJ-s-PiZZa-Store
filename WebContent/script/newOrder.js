@@ -2,8 +2,13 @@ $(function(){
 	$('.container').last().hide();
 	
 	$('#next').click(function(){
-		$('.container').last().prev().hide();
-		$('.container').last().show();
+		var cart = $('footer').find('input').length;
+		if(cart == 0){
+			alert("메뉴를 선택해주세요.");// 새로고침 곤란한데...? reloading 됨
+		} else {
+			$('.container').last().prev().hide();
+			$('.container').last().show();			
+		}
 	});
 	
 	$('#prev').click(function(){

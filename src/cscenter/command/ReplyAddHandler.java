@@ -19,7 +19,7 @@ public class ReplyAddHandler implements Handler {
 		Comment comment = new Comment();
 		comment.setInquiryId(Integer.parseInt(req.getParameter("id")));
 		comment.setComment(req.getParameter("comments"));
-		comment.setCustomerId(customer.getId());
+		comment.setCustomerId(customer.getUserId());
 		if(customer.isManager()) {
 			comment.setStateChangable(true);
 		} else {

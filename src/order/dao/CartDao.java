@@ -2,9 +2,12 @@ package order.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
+import init.JDBCUtil;
 import order.model.Cart;
 
 public class CartDao {
@@ -23,18 +26,28 @@ public class CartDao {
 		
 	}
 
-	public List<Cart> selectByUser(Connection conn, String customerId) throws SQLException {
-		String sql = "SELECT * FROM cart "
+	public List<Cart> selectByUser(Connection conn, int customerId) throws SQLException {
+		String sql = "SELECT * FROM cartDetail "
 				+ "WHERE customerId = ?";
 		List<Cart> cartList = null;
+		ResultSet rs = null;
 		
 		try (PreparedStatement pstmt = conn.prepareStatement(sql)){
-			pstmt.setString(1, customerId);
+			cartList = new ArrayList<>();
+			pstmt.setInt(1, customerId);
 			
-			pstmt.executeQuery();
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				Cart cart = new Cart();
+				cart.setMenuId(rs.getInt("menuId"));
+				cart.setEa(rs.getInt("ea"));
+				cart.setMenuName(rs.getString("menuName"));
+				cartList.add(cart);
+			}
 			
+		} finally {
+			JDBCUtil.close(rs);
 		}
-		
 		return cartList;
 	}
 

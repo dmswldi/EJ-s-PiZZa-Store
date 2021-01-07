@@ -36,14 +36,14 @@ public class OrderHandler implements Handler {
 		
 		List<Menu> menus = readSvc.readMenu();
 		List<Store> stores = readSvc.readStore();
-		List<Cart> cartList = cartSvc.getCart(customer.getId());
+		//List<Cart> cartList = cartSvc.getCart(customer.getId());
 		
 		req.setAttribute("dorw", req.getParameter("dorw"));//??? req 공유되는데 왜 설정해줘야 하지?
 		req.setAttribute("menus", menus);
 		req.setAttribute("stores", stores);
-		if(cartList != null) {
-			req.setAttribute("cart", cartList);
-		}
+		//if(cartList != null) {
+		//	req.setAttribute("cart", cartList);
+		//}
 		
 		return FORM_VIEW;
 	}

@@ -27,7 +27,7 @@ public class ReadMyListHandler implements Handler {
 		
 		Customer customer = (Customer) req.getSession().getAttribute("user");
 		
-		PostPage postPage = readMyListSvc.readPostList(pageNum, customer.getId());
+		PostPage postPage = readMyListSvc.readPostList(pageNum, customer.getUserId());
 		req.setAttribute("page", postPage);
 		if(postPage != null) {
 			List<Integer> replyCntList = replyReadSvc.getReplyCntList(postPage.getList());

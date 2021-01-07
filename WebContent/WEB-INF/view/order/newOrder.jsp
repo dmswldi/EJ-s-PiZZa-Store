@@ -12,36 +12,10 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 <script type="text/javascript" src="${root }/script/newOrder.js"></script>
-<style>
-footer { <%-- 임시 --%>
-	position: fixed;
-	z-index: 30;
-	background-color: yellow;
-}
-</style>
-<title>EJ's Pizza Store</title>
-
+<link href="${root }/css/newOrder.css" rel="stylesheet" type="text/css">
 <script>
-/*
-$(function() {
-	var url = "cart";
-	var data = {
-			abc: "def",
-			d: 3
-	};
-	
-	$("#btn-1").click(function() {
-		$.post(url, data, function() {
-			console.log("성공");
-		});
-	});
-	
-	
-});*/
-
-$(function(){
-	var result;
-	var url = "/cart";/* ${root } +  붙여주면?*/ 
+$(function(){/* 나중에 ajax로 다 처리하자..!!! */
+	var url = "${root }/cart";/* or "cart" */ 
 			
 	$('.addToCart').click(function(){
 		var data = {
@@ -49,17 +23,24 @@ $(function(){
 			ea: $(this).siblings('form').find('div').find('input').val()
 		};
 		$.post(url, data, function(data){
-			/*result = data.dataList;
-			/*console.log(result);*/
-			$('#ea').val(data);
-			console.log("성공");
+			$('footer').html("");/* 다시 주문 눌렀을 때도 뜨게 하고 싶은데..!!!! 카트 투명도랑 정렬 왜저래...  */
+			data.forEach(function(item) {
+				$('footer').append("<div class='justify-content-center'><input type='text' value='" + item.menuName + "' disabled />");
+				$('footer').append("<input type='text' value='" + item.ea + "ea' disabled />");
+				$('footer').append("<input type='text' value='" + item.menuId + "' hidden=true />");
+				$('footer').append("</div><br>");
+			});
 		});
+	});
+	
+	$('#usePoints').click(function(){
+		$(this).next().find('input').val(${sessionScope.user.point });
 	});
 });
 </script>
+<title>EJ's Pizza Store</title>
 </head>
 <body>
-<button id="btn-1">ajax</button>
 <t:navbar />
 
 <div class="container mt-5"  data-spy="scroll" data-target="#prev" data-offset="0">
@@ -93,14 +74,14 @@ $(function(){
 						      <div class="card-body">
 						        <h5 class="card-title">${menu.name }</h5>
 						        <p class="card-text">${menu.price }원</p>
-						        <form class="text-center">
+						        <div class="text-center"> <!-- form에서 div로 변경함 -->
 						        	<input type="text" name="menuId" class="menuId" value="${menu.id }" hidden=true />
 							        <div class="rounded-pill border py-2">
 										<i class="fas fa-minus"></i>
 										<input type="number" class="border-0 text-center" name="ea" value="1" readonly>
 										<i class="fas fa-plus"></i>
 									</div>
-						        </form>
+						        </div>
 							    <button class="btn btn-primary float-right mt-2 addToCart">Add to Cart</button>
 						      </div>
 						    </div>
@@ -120,15 +101,7 @@ $(function(){
 		<a class="btn btn-primary" id="next" href="#">Next</a>
 	</div>
 	<br />
-	<footer class="text-center">
-<%-- 		<c:set var="" value=""></c:set> --%>
-<%--     	<c:if test=""></c:if> --%>
-    	<form action="">
-    		<c:forEach items="${cart }" var="cart">
-    			<input type="text" id="ea" name="ea" />
-    		</c:forEach>
-    	</form>
-	</footer>
+	<footer class="flex-column"></footer>
 </div>
 
 
@@ -147,11 +120,11 @@ $(function(){
 			<h5>주문자 정보</h5>
 			<div class="form-group">
 			    <label for="name">Name</label>
-			    <input type="text" class="form-control" id="name" name="name" value="${sessionScope.user.name }" required>
+			    <input type="text" class="form-control" id="name" name="name" value="${sessionScope.user.name }" required disabled>
 		    </div>
 		    <div class="form-group">
 			    <label for="phone">Phone</label>
-			    <input type="text" class="form-control" id="phone" name="phone" value="${sessionScope.user.phone }" required>
+			    <input type="text" class="form-control" id="phone" name="phone" value="${sessionScope.user.phone }" required disabled>
 		    </div>
 	
 			<c:if test="${dorw eq 0 }"> <!-- delivery -->
@@ -179,10 +152,9 @@ $(function(){
 				<h5>결제 정보</h5>
 				<small class="text-muted">Usable Point: ${sessionScope.user.point }</small> <br />
 			    <label for="usePoints">use all points</label> <input type="checkbox" id="usePoints"> 
-			    <%-- 얘 누르면 포인트 적용 --%>
 				<%-- <c:if 포인트 0 이하면 disable --%>
-				<div class="form-group"> <%-- value 미리 넣지 말고! --%>
-			    	<input type="number" class="form-control" id="point" name="point" value="${sessionScope.user.point }" required>
+				<div class="form-group">
+			    	<input type="number" class="form-control" id="point" name="point" value="-1" required>
 				</div>
 				
 				<div class="form-group">

@@ -35,7 +35,7 @@ public class WithdrawalHandler implements Handler {
 	private String processSubmit(HttpServletRequest req, HttpServletResponse res) throws IOException {
 		User user = new User();
 		Customer customer = (Customer) req.getSession().getAttribute("user");
-		user.setId(customer.getId());
+		user.setId(customer.getUserId());
 		user.setPassword(req.getParameter("password"));
 		
 		Map<String, Boolean> errors = new HashMap<>();

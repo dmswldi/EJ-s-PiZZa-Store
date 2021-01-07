@@ -3,6 +3,7 @@ package order.model;
 public class Cart {
 	private int menuId;
 	private int ea;
+	private String menuName;
 	
 	public int getMenuId() {
 		return menuId;
@@ -16,6 +17,13 @@ public class Cart {
 	}
 	public void setEa(int ea) {
 		this.ea = ea;
+	}
+	
+	public String getMenuName() {
+		return menuName;
+	}
+	public void setMenuName(String menuName) {
+		this.menuName = menuName;
 	}
 	
 }

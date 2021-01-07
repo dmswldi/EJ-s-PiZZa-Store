@@ -36,7 +36,7 @@ public class ModifyInfoHandler implements Handler {
 		Customer customer = (Customer) req.getSession().getAttribute("user");
 		ModifyRequest modifyReq = new ModifyRequest();
 		
-		modifyReq.setId(customer.getId());
+		modifyReq.setId(customer.getUserId());
 		modifyReq.setCurPassword(req.getParameter("curPassword"));
 		modifyReq.setNewPassword(req.getParameter("newPassword"));
 		modifyReq.setPasswordCheck(req.getParameter("passwordCheck"));

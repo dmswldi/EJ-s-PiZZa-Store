@@ -1,6 +1,7 @@
 package order.process;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -8,6 +9,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.google.gson.Gson;
 
 import auth.model.Customer;
 import order.model.Cart;
@@ -51,10 +54,14 @@ public class CartServlet extends HttpServlet {
 		Customer customer = (Customer) request.getSession().getAttribute("user");
 		
 		cartSvc.add(cart, customer.getId());
-		List<Cart> cartList = cartSvc.getCart(customer.getId());// return 하고 싶어요
+		List<Cart> cartList = cartSvc.getCart(customer.getId());
 		
-		//System.out.println(request.getParameter("abc"));
-		//System.out.println(request.getParameter("d"));
+		String result = new Gson().toJson(cartList);
+		response.setContentType("application/json");
+		
+		PrintWriter out = response.getWriter();
+		out.print(result);
+		out.flush();
 	}
 
 }

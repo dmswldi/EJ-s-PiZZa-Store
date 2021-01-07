@@ -1,0 +1,10 @@
+@charset "UTF-8";
+
+footer {
+	position: fixed;
+	z-index: 30;
+}
+
+footer input {
+	border: none;
+}
