@@ -184,7 +184,7 @@ CREATE TABLE IF NOT EXISTS `pizza`.`ORDER` (
   `orderDate` DATETIME NOT NULL DEFAULT now(),
   `totalPrice` INT NOT NULL DEFAULT 0,
   `totalDiscount` INT NOT NULL DEFAULT 0,
-  `detination` VARCHAR(200) NOT NULL,
+  `detination` VARCHAR(200),
   `status` VARCHAR(45) NOT NULL CHECK (`status` IN ('주문완료','결제완료')),
   `togoOrWrap` TINYINT NOT NULL,
   PRIMARY KEY (`id`),
@@ -196,3 +196,13 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+
+
+-- VIEW 생성
+DROP VIEW `cartDetail`;
+CREATE VIEW `cartDetail` AS
+SELECT cart.id,  menu.name menuName, cart.menuId, cart.ea, cart.customerId
+FROM `pizza`.`cart` AS cart, `pizza`.`menu` AS menu
+WHERE cart.menuId = menu.id;
+

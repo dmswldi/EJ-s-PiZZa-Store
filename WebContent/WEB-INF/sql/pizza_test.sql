@@ -36,5 +36,8 @@ WHERE inquiryId = 8;
 INSERT INTO comment (inquiryId, customerId, comments, date )
 VALUES (8, "zozina", "i have same question", now());
 
-SELECT * FROM cart;
+SELECT * FROM cart
+WHERE customerId = 1;
 DELETE FROM cart;
+
+SELECT * FROM cartDetail;
