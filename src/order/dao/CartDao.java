@@ -51,4 +51,41 @@ public class CartDao {
 		return cartList;
 	}
 
+	public int hasMenu(Connection conn, Cart cart, int customerId) throws SQLException {
+		String sql = "SELECT * FROM cart "
+				+ "WHERE customerId = ? "
+				+ "AND menuId = ?";
+		ResultSet rs = null;
+		
+		try (PreparedStatement pstmt = conn.prepareStatement(sql)){
+			pstmt.setInt(1, customerId);
+			pstmt.setInt(2, cart.getMenuId());
+			
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				return rs.getInt("ea");
+			}
+			
+		} finally {
+			JDBCUtil.close(rs);
+		}
+		return 0;
+	}
+
+	public void update(Connection conn, Cart cart, int customerId, int ea) throws SQLException {
+		String sql = "UPDATE cart "
+				+ "SET ea = ? "
+				+ "WHERE customerId = ? "
+				+ "AND menuId = ?";
+		
+		try (PreparedStatement pstmt = conn.prepareStatement(sql)){
+			pstmt.setInt(1, ea + cart.getEa());
+			pstmt.setInt(2, customerId);
+			pstmt.setInt(3, cart.getMenuId());
+			
+			pstmt.executeUpdate();
+		}
+		
+	}
+
 }

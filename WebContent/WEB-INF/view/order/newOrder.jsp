@@ -16,23 +16,53 @@
 <script>
 $(function(){/* 나중에 ajax로 다 처리하자..!!! */
 	var url = "${root }/cart";/* or "cart" */ 
-			
+	/*
+	$('footer').html("");
+	JSON.parse('${cartList }').forEach(function(item){
+		$('footer').append("<div class='justify-content-center'><input type='text' value='" + item.menuName + "' disabled />");
+		$('footer').append("<input type='text' value='" + item.ea + "ea' disabled />");
+		$('footer').append("<input type='text' value='" + item.menuId + "' hidden=true />");
+		$('footer').append("</div><br>");
+	});*/
+	
 	$('.addToCart').click(function(){
 		var data = {
-			menuId: $(this).siblings('form').find('.menuId').val(),
-			ea: $(this).siblings('form').find('div').find('input').val()
+			menuId: $(this).prev().find('.menuId').val(),
+			ea: $(this).prev().find('div').find('input').val()
 		};
 		$.post(url, data, function(data){
-			$('footer').html("");/* 다시 주문 눌렀을 때도 뜨게 하고 싶은데..!!!! 카트 투명도랑 정렬 왜저래...  */
+			$('footer').html("");
+				$('footer').append("<ul class='overflow-auto mx-auto'>")
 			data.forEach(function(item) {
+				/*
 				$('footer').append("<div class='justify-content-center'><input type='text' value='" + item.menuName + "' disabled />");
 				$('footer').append("<input type='text' value='" + item.ea + "ea' disabled />");
 				$('footer').append("<input type='text' value='" + item.menuId + "' hidden=true />");
 				$('footer').append("</div><br>");
+				*/
+				
+				/*
+				$('footer').append("<li class='list-group-item d-flex justify-content-between align-items-center'>");
+				$('footer').append(item.menuName);
+				$('footer').append("<span class='badge badge-primary badge-pill'>" + item.ea + "</span>");
+				$('footer').append("</li>");
+				*/
+				$('footer').append("<li class='list-group-item d-flex justify-content-between align-items-center w-50'>" /*height줘서 스크롤 보이게, center*/
+						+ item.menuName + 
+						"<span class='badge badge-primary badge-pill'>"
+						+ item.ea +
+						"</span>"
+						+ "</li>");
+				
 			});
+				$('footer').append("</ul>");
 		});
 	});
 	
+	if(${sessionScope.user.point } == 0){
+		$('#point').attr("disabled", true);
+		$('#usePoints').attr("disabled", true);
+	}
 	$('#usePoints').click(function(){
 		$(this).next().find('input').val(${sessionScope.user.point });
 	});
@@ -101,7 +131,9 @@ $(function(){/* 나중에 ajax로 다 처리하자..!!! */
 		<a class="btn btn-primary" id="next" href="#">Next</a>
 	</div>
 	<br />
-	<footer class="flex-column"></footer>
+	
+	
+	<footer></footer>
 </div>
 
 
@@ -152,9 +184,8 @@ $(function(){/* 나중에 ajax로 다 처리하자..!!! */
 				<h5>결제 정보</h5>
 				<small class="text-muted">Usable Point: ${sessionScope.user.point }</small> <br />
 			    <label for="usePoints">use all points</label> <input type="checkbox" id="usePoints"> 
-				<%-- <c:if 포인트 0 이하면 disable --%>
 				<div class="form-group">
-			    	<input type="number" class="form-control" id="point" name="point" value="-1" required>
+			    	<input type="number" class="form-control" id="point" name="point" value="0" required>
 				</div>
 				
 				<div class="form-group">

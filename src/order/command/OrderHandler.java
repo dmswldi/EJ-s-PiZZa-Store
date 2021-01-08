@@ -6,6 +6,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
 import auth.model.Customer;
 import controller.Handler;
 import order.model.Cart;
@@ -36,14 +38,16 @@ public class OrderHandler implements Handler {
 		
 		List<Menu> menus = readSvc.readMenu();
 		List<Store> stores = readSvc.readStore();
-		//List<Cart> cartList = cartSvc.getCart(customer.getId());
+		List<Cart> cartList = cartSvc.getCart(customer.getId());
 		
 		req.setAttribute("dorw", req.getParameter("dorw"));//??? req 공유되는데 왜 설정해줘야 하지?
 		req.setAttribute("menus", menus);
 		req.setAttribute("stores", stores);
-		//if(cartList != null) {
-		//	req.setAttribute("cart", cartList);
-		//}
+		
+		if(cartList != null) {
+			String result = new Gson().toJson(cartList);
+			req.setAttribute("cartList", result);
+		}
 		
 		return FORM_VIEW;
 	}

@@ -22,7 +22,12 @@ public class CartService {
 			conn = ConnectionProvider.getConnection();
 			conn.setAutoCommit(false);
 			
-			cartDao.insert(conn, cart, customerId);				
+			int ea = cartDao.hasMenu(conn, cart, customerId);
+			if(ea == 0) {
+				cartDao.insert(conn, cart, customerId);// 해당 메뉴 카트 뷰에 없으면 insert						
+			} else {
+				cartDao.update(conn, cart, customerId, ea);// 카트 뷰에 존재하면 update 
+			}
 			
 			conn.commit();
 		} catch(SQLException e) {
