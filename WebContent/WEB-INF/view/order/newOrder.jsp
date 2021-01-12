@@ -16,14 +16,17 @@
 <script>
 $(function(){/* 나중에 ajax로 다 처리하자..!!! */
 	var url = "${root }/cart";/* or "cart" */ 
-	/*
+	
 	$('footer').html("");
+	$('footer').append("<ul id='cartLi' class='overflow-auto rounded'></ul>")
 	JSON.parse('${cartList }').forEach(function(item){
-		$('footer').append("<div class='justify-content-center'><input type='text' value='" + item.menuName + "' disabled />");
-		$('footer').append("<input type='text' value='" + item.ea + "ea' disabled />");
-		$('footer').append("<input type='text' value='" + item.menuId + "' hidden=true />");
-		$('footer').append("</div><br>");
-	});*/
+		$('#cartLi').append("<li class='list-group-item d-flex justify-content-between align-items-center w-50'>" /*height줘서 스크롤 보이게, center*/
+				+ item.menuName + 
+				"<span class='badge badge-primary badge-pill'>"
+				+ item.ea +
+				"</span>"
+				+ "</li>");
+	});
 	
 	$('.addToCart').click(function(){
 		var data = {
@@ -32,22 +35,9 @@ $(function(){/* 나중에 ajax로 다 처리하자..!!! */
 		};
 		$.post(url, data, function(data){
 			$('footer').html("");
-				$('footer').append("<ul class='overflow-auto mx-auto'>")
+			$('footer').append("<ul id='cartLi' class='overflow-auto rounded'></ul>")
 			data.forEach(function(item) {
-				/*
-				$('footer').append("<div class='justify-content-center'><input type='text' value='" + item.menuName + "' disabled />");
-				$('footer').append("<input type='text' value='" + item.ea + "ea' disabled />");
-				$('footer').append("<input type='text' value='" + item.menuId + "' hidden=true />");
-				$('footer').append("</div><br>");
-				*/
-				
-				/*
-				$('footer').append("<li class='list-group-item d-flex justify-content-between align-items-center'>");
-				$('footer').append(item.menuName);
-				$('footer').append("<span class='badge badge-primary badge-pill'>" + item.ea + "</span>");
-				$('footer').append("</li>");
-				*/
-				$('footer').append("<li class='list-group-item d-flex justify-content-between align-items-center w-50'>" /*height줘서 스크롤 보이게, center*/
+				$('#cartLi').append("<li class='list-group-item d-flex justify-content-between align-items-center w-50'>" /*height줘서 스크롤 보이게, center*/
 						+ item.menuName + 
 						"<span class='badge badge-primary badge-pill'>"
 						+ item.ea +
@@ -55,7 +45,6 @@ $(function(){/* 나중에 ajax로 다 처리하자..!!! */
 						+ "</li>");
 				
 			});
-				$('footer').append("</ul>");
 		});
 	});
 	

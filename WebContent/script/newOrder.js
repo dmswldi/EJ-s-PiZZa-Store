@@ -2,7 +2,8 @@ $(function(){
 	$('.container').last().hide();
 	
 	$('#next').click(function(){
-		var cart = $('footer').find('input').length;
+		var cart = $('footer').find('li').length;
+		console.log(cart);
 		if(cart == 0){
 			alert("메뉴를 선택해주세요.");// 새로고침 곤란한데...? reloading 됨
 		} else {
