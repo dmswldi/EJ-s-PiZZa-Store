@@ -63,4 +63,5 @@ $(function(){
 		value = Number(value) + 1;
 		$(this).prev().val(value);
 	});
+	
 });

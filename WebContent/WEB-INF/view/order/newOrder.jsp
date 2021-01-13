@@ -20,11 +20,15 @@ $(function(){/* 나중에 ajax로 다 처리하자..!!! */
 	$('footer').html("");
 	$('footer').append("<ul id='cartLi' class='overflow-auto rounded'></ul>")
 	JSON.parse('${cartList }').forEach(function(item){
-		$('#cartLi').append("<li class='list-group-item d-flex justify-content-between align-items-center w-50'>" /*height줘서 스크롤 보이게, center*/
-				+ item.menuName + 
-				"<span class='badge badge-primary badge-pill'>"
-				+ item.ea +
-				"</span>"
+		$('#cartLi').append("<li class='list-group-item d-flex justify-content-between align-items-center'>" /*height줘서 스크롤 보이게, center*/
+				+ item.menuName
+				+ "<div>"
+				+ "<i class='fas fa-minus'></i>"
+				+ "<span class='badge badge-primary badge-pill'>"
+				+ item.ea
+				+ "</span>"
+				+ "<i class='fas fa-plus'></i>"
+				+ "</div>"
 				+ "</li>");
 	});
 	
@@ -37,11 +41,11 @@ $(function(){/* 나중에 ajax로 다 처리하자..!!! */
 			$('footer').html("");
 			$('footer').append("<ul id='cartLi' class='overflow-auto rounded'></ul>")
 			data.forEach(function(item) {
-				$('#cartLi').append("<li class='list-group-item d-flex justify-content-between align-items-center w-50'>" /*height줘서 스크롤 보이게, center*/
-						+ item.menuName + 
-						"<span class='badge badge-primary badge-pill'>"
-						+ item.ea +
-						"</span>"
+				$('#cartLi').append("<li class='list-group-item d-flex justify-content-between align-items-center'>" /*height줘서 스크롤 보이게, center*/
+						+ item.menuName
+						+ "<span class='badge badge-primary badge-pill'>"
+						+ item.ea
+						+ "</span>"
 						+ "</li>");
 				
 			});
@@ -55,6 +59,16 @@ $(function(){/* 나중에 ajax로 다 처리하자..!!! */
 	$('#usePoints').click(function(){
 		$(this).next().find('input').val(${sessionScope.user.point });
 	});
+	
+	$('#point').focusout(function(){
+		var usePoint = $('#point').val();
+		var myPoint = ${sessionScope.user.point };
+		
+		if(usePoint > myPoint){
+			
+			
+		}
+	})
 });
 </script>
 <title>EJ's Pizza Store</title>
@@ -121,8 +135,9 @@ $(function(){/* 나중에 ajax로 다 처리하자..!!! */
 	</div>
 	<br />
 	
-	
+	<div style="background-color: red; border: 5px solid black; width: 100px;" class="d-flex justify-content-between align-items-center">
 	<footer></footer>
+	</div>
 </div>
 
 
@@ -137,26 +152,26 @@ $(function(){/* 나중에 ajax로 다 처리하자..!!! */
 		<div class="col-6">
 			<h2 class="text-center">Check your information.</h2>
 			<br />
-			
-			<h5>주문자 정보</h5>
-			<div class="form-group">
-			    <label for="name">Name</label>
-			    <input type="text" class="form-control" id="name" name="name" value="${sessionScope.user.name }" required disabled>
-		    </div>
-		    <div class="form-group">
-			    <label for="phone">Phone</label>
-			    <input type="text" class="form-control" id="phone" name="phone" value="${sessionScope.user.phone }" required disabled>
-		    </div>
-	
-			<c:if test="${dorw eq 0 }"> <!-- delivery -->
-			  <div class="form-group">
-			    <label for="address">Address</label>
-			    <input type="text" class="form-control" id="address" name="address" value="${sessionScope.user.address }" required>
-			  </div>
-			</c:if>
-			
-			
+
 			<form action="${root }/order.do" method="post">
+			
+				<h5>주문자 정보</h5>
+				<div class="form-group">
+				    <label for="name">Name</label>
+				    <input type="text" class="form-control" id="name" name="name" value="${sessionScope.user.name }" required disabled>
+			    </div>
+			    <div class="form-group">
+				    <label for="phone">Phone</label>
+				    <input type="text" class="form-control" id="phone" name="phone" value="${sessionScope.user.phone }" required disabled>
+			    </div>
+		
+				<c:if test="${dorw eq 0 }"> <!-- if delivery -->
+				  <div class="form-group">
+				    <label for="address">Address</label>
+				    <input type="text" class="form-control" id="address" name="address" value="${sessionScope.user.address }" required>
+				  </div>
+				</c:if>
+				
 			
 				<input type="text" name="customerId" value="${sessionScope.user.id }" hidden=true />
 				<div class="form-group">
@@ -179,9 +194,9 @@ $(function(){/* 나중에 ajax로 다 처리하자..!!! */
 				
 				<div class="form-group">
 				    <label for="payment">Payment</label>
-					  <a class="btn btn-light form-control payment">Card</a>
-					  <a class="btn btn-light form-control payment">Phone</a>
-					  <a class="btn btn-light form-control payment">Cash</a>
+					  <input class="btn btn-light form-control payment" name="payment" value="Card" readonly>
+					  <input class="btn btn-light form-control payment" name="payment" value="Phone" readonly>
+					  <input class="btn btn-light form-control payment" name="payment" value="Cash" readonly>
 					  <small class="text-muted">* Cash is face-to-face payment.</small>
 			    </div>
 			    

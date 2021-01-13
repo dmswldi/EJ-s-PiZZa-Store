@@ -54,8 +54,19 @@ public class OrderHandler implements Handler {
 
 	private String processSubmit(HttpServletRequest req, HttpServletResponse res) {
 		
+		String payment = req.getParameter("payment");
 		
-		
+		switch(payment) {
+		case "Card": 
+			// 카드사 선택, 카드 번호 입력 받기
+			break;
+		case "Phone": 
+			// (주문 확인 후) 핸드폰 결제창으로 이동.,,,
+			break;
+		case "Cash":
+			
+			break;
+		}
 		
 		return null;
 	}
