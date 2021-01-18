@@ -41,3 +41,8 @@ WHERE customerId = 1;
 DELETE FROM cart;
 
 SELECT * FROM cartDetail;
+
+UPDATE customer
+SET point = 1000
+WHERE userId='joajoajoa8';
+SELECT * FROM customer WHERE userId='joajoajoa8';
