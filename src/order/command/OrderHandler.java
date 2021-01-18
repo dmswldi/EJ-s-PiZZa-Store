@@ -53,20 +53,15 @@ public class OrderHandler implements Handler {
 	}
 
 	private String processSubmit(HttpServletRequest req, HttpServletResponse res) {
+		String address = req.getParameter("address");
+		String store = req.getParameter("store");// 0~2, storeId
+		String point = req.getParameter("point");// null
+		String payment = req.getParameter("payment");// Card
 		
-		String payment = req.getParameter("payment");
-		
-		switch(payment) {
-		case "Card": 
-			// 카드사 선택, 카드 번호 입력 받기
-			break;
-		case "Phone": 
-			// (주문 확인 후) 핸드폰 결제창으로 이동.,,,
-			break;
-		case "Cash":
-			
-			break;
-		}
+		System.out.println(address);
+		System.out.println(store);
+		System.out.println(point);
+		System.out.println(payment);
 		
 		return null;
 	}

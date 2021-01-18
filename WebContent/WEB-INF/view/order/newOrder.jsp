@@ -22,13 +22,9 @@ $(function(){/* 나중에 ajax로 다 처리하자..!!! */
 	JSON.parse('${cartList }').forEach(function(item){
 		$('#cartLi').append("<li class='list-group-item d-flex justify-content-between align-items-center'>" /*height줘서 스크롤 보이게, center*/
 				+ item.menuName
-				+ "<div>"
-				+ "<i class='fas fa-minus'></i>"
 				+ "<span class='badge badge-primary badge-pill'>"
 				+ item.ea
 				+ "</span>"
-				+ "<i class='fas fa-plus'></i>"
-				+ "</div>"
 				+ "</li>");
 	});
 	
@@ -52,21 +48,22 @@ $(function(){/* 나중에 ajax로 다 처리하자..!!! */
 		});
 	});
 	
-	if(${sessionScope.user.point } == 0){
+	var myPoint = ${sessionScope.user.point };
+	console.log(myPoint);
+	if(point == 0){
 		$('#point').attr("disabled", true);
 		$('#usePoints').attr("disabled", true);
 	}
 	$('#usePoints').click(function(){
-		$(this).next().find('input').val(${sessionScope.user.point });
+		$('#input').val(myPoint);
 	});
 	
 	$('#point').focusout(function(){
 		var usePoint = $('#point').val();
-		var myPoint = ${sessionScope.user.point };
 		
 		if(usePoint > myPoint){
-			
-			
+			alert('사용 가능 최대 포인트는 ' + myPoint + '원입니다.');
+			$('#input').val(myPoint);// 왜 안 되지
 		}
 	})
 });
@@ -135,9 +132,7 @@ $(function(){/* 나중에 ajax로 다 처리하자..!!! */
 	</div>
 	<br />
 	
-	<div style="background-color: red; border: 5px solid black; width: 100px;" class="d-flex justify-content-between align-items-center">
 	<footer></footer>
-	</div>
 </div>
 
 
@@ -194,9 +189,9 @@ $(function(){/* 나중에 ajax로 다 처리하자..!!! */
 				
 				<div class="form-group">
 				    <label for="payment">Payment</label>
-					  <input class="btn btn-light form-control payment" name="payment" value="Card" readonly>
-					  <input class="btn btn-light form-control payment" name="payment" value="Phone" readonly>
-					  <input class="btn btn-light form-control payment" name="payment" value="Cash" readonly>
+					  <input class="btn btn-light form-control payment" value="Card" readonly>
+					  <input class="btn btn-light form-control payment" value="Phone" readonly>
+					  <input class="btn btn-light form-control payment" value="Cash" readonly>
 					  <small class="text-muted">* Cash is face-to-face payment.</small>
 			    </div>
 			    

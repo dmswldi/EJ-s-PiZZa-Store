@@ -3,7 +3,6 @@ $(function(){
 	
 	$('#next').click(function(){
 		var cart = $('footer').find('li').length;
-		console.log(cart);
 		if(cart == 0){
 			alert("메뉴를 선택해주세요.");// 새로고침 곤란한데...? reloading 됨
 		} else {
@@ -19,7 +18,9 @@ $(function(){
 	
 	$('.payment').click(function(){
 		$('.payment').css('background-color', '#f8f9fa');
+		$('.payment').removeAttr('name');
 		$(this).css('background-color', '#ced4da');
+		$(this).attr('name', 'payment');
 	});
 	
 	
